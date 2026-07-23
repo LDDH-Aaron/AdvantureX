@@ -1,0 +1,126 @@
+from contextlib import asynccontextmanager
+from pathlib import Path
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+from .config import Settings, get_settings
+from .models import AppState, DemoCallState, DemoCallTrigger, InboundMessage, Rescue, RescueCreate, VoiceReply, VoiceTurn, ZiloEvent
+from .orchestrator import Orchestrator
+from .store import Store
+
+
+settings = get_settings()
+store = Store(settings.database_path)
+orchestrator = Orchestrator(store, settings)
+
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    await orchestrator.recover()
+    yield
+
+
+app = FastAPI(title="Wingman", version="1.0.0", lifespan=lifespan)
+cors_origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
+if cors_origins:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=cors_origins,
+        allow_methods=["GET", "POST"],
+        allow_headers=["Content-Type", "X-Wingman-Key"],
+    )
+static_dir = Path(__file__).parent / "static"
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
+
+def auth(x_wingman_key: str | None = Header(default=None)):
+    if settings.api_key and x_wingman_key != settings.api_key:
+        raise HTTPException(status_code=401, detail="Invalid X-Wingman-Key")
+
+
+@app.get("/", include_in_schema=False)
+async def dashboard():
+    return FileResponse(static_dir / "index.html")
+
+
+@app.get("/mobile", include_in_schema=False)
+async def mobile_call_screen():
+    return FileResponse(static_dir / "mobile.html")
+
+
+@app.get("/health")
+async def health():
+    return {"ok": True, "photon_mode": "live" if orchestrator.photon.live else "demo", "calling_enabled": orchestrator.phone.enabled}
+
+
+@app.get("/api/v1/state", response_model=AppState, dependencies=[Depends(auth)])
+async def state():
+    return AppState(rescues=store.list_rescues(), events=store.list_events(), photon_mode="live" if orchestrator.photon.live else "demo", calling_enabled=orchestrator.phone.enabled)
+
+
+@app.post("/api/v1/rescues", response_model=Rescue, dependencies=[Depends(auth)])
+async def rescue(request: RescueCreate):
+    try:
+        return await orchestrator.create_rescue(request)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@app.post("/api/v1/rescues/{rescue_id}/cancel", response_model=Rescue, dependencies=[Depends(auth)])
+async def cancel(rescue_id: str):
+    result = await orchestrator.cancel(rescue_id)
+    if not result:
+        raise HTTPException(404, "Rescue not found")
+    return result
+
+
+@app.post("/api/v1/events/zilo", dependencies=[Depends(auth)])
+async def zilo(event: ZiloEvent):
+    return {"feedback": await orchestrator.zilo_event(event.kind, event.transcript)}
+
+
+@app.post("/api/v1/demo/trigger", response_model=DemoCallState, dependencies=[Depends(auth)])
+async def trigger_demo_call(request: DemoCallTrigger):
+    try:
+        return await orchestrator.trigger_demo_call(request)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+
+
+@app.get("/api/v1/demo/call", response_model=DemoCallState, dependencies=[Depends(auth)])
+async def demo_call_state():
+    return orchestrator.get_demo_call()
+
+
+@app.post("/api/v1/demo/call/accept", response_model=DemoCallState, dependencies=[Depends(auth)])
+async def accept_demo_call():
+    return orchestrator.accept_demo_call()
+
+
+@app.post("/api/v1/demo/call/decline", response_model=DemoCallState, dependencies=[Depends(auth)])
+async def decline_demo_call():
+    return orchestrator.decline_demo_call()
+
+
+@app.post("/api/v1/demo/call/end", response_model=DemoCallState, dependencies=[Depends(auth)])
+async def end_demo_call():
+    return orchestrator.end_demo_call()
+
+
+@app.post("/api/v1/voice/turn", response_model=VoiceReply, dependencies=[Depends(auth)])
+async def voice(turn: VoiceTurn):
+    return await orchestrator.voice_turn(turn.transcript, turn.conversation_id)
+
+
+@app.post("/api/v1/photon/inbound", dependencies=[Depends(auth)])
+async def photon_inbound(message: InboundMessage):
+    return {"reply": await orchestrator.inbound(message.sender, message.text)}
+
+
+@app.post("/api/v1/call", dependencies=[Depends(auth)])
+async def call():
+    try:
+        return {"call_sid": await orchestrator.call_user("dashboard")}
+    except RuntimeError as exc:
+        raise HTTPException(409, str(exc)) from exc

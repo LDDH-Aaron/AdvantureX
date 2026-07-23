@@ -1,0 +1,20 @@
+# Secrets and machine-local runtime state
+.env
+.env.*
+!.env.example
+*.db
+*.db-shm
+*.db-wal
+
+# Dependencies and generated files
+node_modules/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.DS_Store
+dist/
+build/
+
+# Earlier duplicate Spectrum scaffold; retained locally but not part of Wingman.
+snakeone/snakeone/

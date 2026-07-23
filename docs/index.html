@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#dceeff">
+  <title>Wingman 来电 Demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="phone">
+    <header><button>•••</button><b>✦ 私人提醒</b><button>字幕</button></header>
+    <section class="stage">
+      <div class="avatar"><img src="assets/wingman-avatar.png" alt="Wingman"></div>
+      <h1>Wingman</h1><p>私人助理来电</p>
+      <h2 id="status">准备开始一个模拟双击救场</h2>
+      <div class="dots">● ● ●</div>
+      <p id="caption">点击下方按钮后，先发送 iMessage，再显示来电。</p>
+    </section>
+    <section id="setup" class="setup">
+      <label>收件人（留空使用服务器预设号码）<input id="recipient" placeholder="+86… 或 Apple ID"></label>
+      <label>播放录音（可选 MP3）<input id="recording" type="file" accept="audio/*"></label>
+      <button id="trigger" class="trigger">模拟眼镜 / 戒指双击</button>
+      <small id="modeNote">静态预览：不会发送 iMessage。配置私密 API 后才会连接 Spectrum。</small>
+    </section>
+    <nav>
+      <button id="sound" class="hidden">♬<small>开启铃声</small></button>
+      <button id="decline" class="red hidden">×<small>挂断</small></button>
+      <button id="answer" class="green hidden">⌕<small>接听</small></button>
+    </nav>
+    <p id="hint" class="hint"></p>
+  </main>
+  <audio id="ringtone" src="assets/ringtone.mp3" loop preload="auto"></audio>
+  <audio id="voice" src="assets/default-voice-message.mp3" preload="auto"></audio>
+  <script src="config.js"></script><script src="app.js"></script>
+</body>
+</html>

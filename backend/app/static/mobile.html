@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#dceeff">
+  <title>Wingman 来电</title>
+  <link rel="stylesheet" href="/static/mobile.css">
+</head>
+<body>
+  <main class="phone-shell">
+    <section class="call-card" aria-live="polite">
+      <header class="call-header">
+        <button class="round-top" id="more" aria-label="更多">•••</button>
+        <span class="scene">✦ 私人提醒</span>
+        <button class="round-top" id="subtitle" aria-label="字幕">字幕</button>
+      </header>
+      <div class="stage">
+        <div class="avatar-ring"><img src="/static/assets/wingman-avatar.png" alt="Wingman 头像"></div>
+        <h1>Wingman</h1>
+        <p class="call-kind">私人助理来电</p>
+        <p id="status" class="status">准备开始一个模拟双击救场</p>
+        <div id="dots" class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+        <p id="caption" class="caption">点击下方按钮后，先发送 iMessage，再显示来电。</p>
+      </div>
+      <section class="setup" id="setup">
+        <label>收件人（留空使用服务器预设号码）
+          <input id="recipient" autocomplete="tel" placeholder="+86… 或 Apple ID">
+        </label>
+        <label>播放录音（可选 MP3）
+          <input id="recording" type="file" accept="audio/mpeg,audio/mp3,audio/*">
+        </label>
+        <button id="trigger" class="trigger">模拟眼镜 / 戒指双击</button>
+        <p class="tiny">先经 Spectrum 发出 iMessage；5 秒后进入来电。网页来电不消耗电话线路。</p>
+      </section>
+      <section class="controls" aria-label="通话控制">
+        <button id="sound" class="control neutral hidden" aria-label="开启铃声"><span>♬</span><small>开启铃声</small></button>
+        <button id="decline" class="control decline hidden" aria-label="挂断"><span>×</span><small>挂断</small></button>
+        <button id="answer" class="control answer hidden" aria-label="接听"><span>⌕</span><small>接听</small></button>
+      </section>
+      <p id="audioHint" class="audio-hint"></p>
+    </section>
+  </main>
+  <audio id="ringtone" src="/static/assets/ringtone.mp3" loop preload="auto"></audio>
+  <audio id="voiceMessage" src="/static/assets/default-voice-message.mp3" preload="auto"></audio>
+  <script src="/static/mobile.js"></script>
+</body>
+</html>
