@@ -11,6 +11,21 @@ It currently implements the first four stages of the product plan:
 
 Robot/DimOS functionality is intentionally not included.
 
+## Repository map
+
+```text
+backend/          FastAPI orchestration and local control dashboard
+snakeone/         Spectrum/Photon iMessage Agent
+docs/             GitHub Pages mobile call demo
+hardware/ring/    Ring prototype firmware (ready for contributors)
+hardware/glasses/ Glasses prototype firmware (ready for contributors)
+hardware/shared/  Shared device protocol code
+```
+
+Hardware contributors should start with the [event contract](docs/hardware-event-contract.md)
+and [contribution guide](CONTRIBUTING.md). Device code sends normalized gestures
+to the backend; it never contains Photon credentials.
+
 ## Quick start
 
 ```bash
