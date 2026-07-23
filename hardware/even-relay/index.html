@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <title>Even R1 Relay Console</title>
+    <style>
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: #202225;
+        color: #F4F1EA;
+        font: 14px/1.45 -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        touch-action: manipulation;
+        -webkit-text-size-adjust: 100%;
+        overscroll-behavior: contain;
+      }
+      #app {
+        min-height: 100vh;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      .shell {
+        width: min(1100px, 100%);
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .panel {
+        background: #2B2E32;
+        border: 1px solid #43474D;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 14px;
+      }
+      .header-panel,
+      .section-title,
+      .button-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .eyebrow,
+      .metric-label,
+      label span,
+      time {
+        color: #B8C3BE;
+        font-size: 12px;
+      }
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+      h1 {
+        font-size: 24px;
+      }
+      h2 {
+        font-size: 16px;
+      }
+      .status-pill {
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 12px;
+        border: 1px solid transparent;
+        white-space: nowrap;
+      }
+      .status-pill.ok {
+        background: #16382D;
+        border-color: #2D8F66;
+        color: #8CE1B7;
+      }
+      .status-pill.warn {
+        background: #3B3220;
+        border-color: #A77B2E;
+        color: #F0CB7C;
+      }
+      .controls-grid {
+        display: grid;
+        grid-template-columns: minmax(240px, 1fr) repeat(3, max-content);
+        gap: 12px;
+        align-items: end;
+      }
+      .field {
+        display: grid;
+        gap: 6px;
+      }
+      input[type='url'],
+      input[inputmode='url'] {
+        width: 100%;
+        box-sizing: border-box;
+        border: 1px solid #596067;
+        background: #17191C;
+        color: #F4F1EA;
+        border-radius: 6px;
+        padding: 10px 12px;
+      }
+      .check-field {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        min-height: 42px;
+        white-space: nowrap;
+      }
+      button {
+        border: 1px solid #697178;
+        background: #363B40;
+        color: #F4F1EA;
+        border-radius: 6px;
+        padding: 9px 12px;
+      }
+      button:active {
+        transform: translateY(1px);
+      }
+      button.danger {
+        border-color: #9F5D5D;
+        background: #4A2A2A;
+      }
+      .status-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .status-grid > div {
+        display: grid;
+        gap: 5px;
+        min-width: 0;
+      }
+      .status-grid strong,
+      .event-log strong,
+      .event-log span {
+        overflow-wrap: anywhere;
+      }
+      .event-log {
+        list-style: none;
+        padding: 0;
+        margin: 12px 0 0;
+        display: grid;
+        gap: 8px;
+      }
+      .event-log li {
+        display: grid;
+        grid-template-columns: 72px minmax(140px, 240px) 1fr;
+        gap: 10px;
+        align-items: center;
+        border-top: 1px solid #3F444A;
+        padding-top: 8px;
+      }
+      .event-log .empty {
+        display: block;
+        color: #B8C3BE;
+      }
+      .diagnostics dl {
+        margin: 12px 0 0;
+        display: grid;
+        gap: 10px;
+      }
+      .diagnostics div {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 12px;
+        border-top: 1px solid #3F444A;
+        padding-top: 10px;
+      }
+      .diagnostics dt {
+        color: #B8C3BE;
+      }
+      .diagnostics dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+      .diagnostics pre {
+        margin: 0;
+        white-space: pre-wrap;
+        color: #DCE4E0;
+      }
+      @media (max-width: 760px) {
+        .shell {
+          padding: 12px;
+        }
+        .controls-grid,
+        .status-grid,
+        .event-log li {
+          grid-template-columns: 1fr;
+        }
+        .diagnostics div {
+          grid-template-columns: 1fr;
+        }
+        .button-row {
+          justify-content: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">Companion app is running. Check the glasses display.</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
