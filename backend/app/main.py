@@ -88,22 +88,32 @@ async def trigger_demo_call(request: DemoCallTrigger):
         raise HTTPException(422, str(exc)) from exc
 
 
-@app.get("/api/v1/demo/call", response_model=DemoCallState, dependencies=[Depends(auth)])
+@app.post("/api/v1/demo/fixed", response_model=DemoCallState)
+async def trigger_fixed_demo():
+    try:
+        return await orchestrator.trigger_fixed_demo()
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(429, str(exc)) from exc
+
+
+@app.get("/api/v1/demo/call", response_model=DemoCallState)
 async def demo_call_state():
     return orchestrator.get_demo_call()
 
 
-@app.post("/api/v1/demo/call/accept", response_model=DemoCallState, dependencies=[Depends(auth)])
+@app.post("/api/v1/demo/call/accept", response_model=DemoCallState)
 async def accept_demo_call():
     return orchestrator.accept_demo_call()
 
 
-@app.post("/api/v1/demo/call/decline", response_model=DemoCallState, dependencies=[Depends(auth)])
+@app.post("/api/v1/demo/call/decline", response_model=DemoCallState)
 async def decline_demo_call():
     return orchestrator.decline_demo_call()
 
 
-@app.post("/api/v1/demo/call/end", response_model=DemoCallState, dependencies=[Depends(auth)])
+@app.post("/api/v1/demo/call/end", response_model=DemoCallState)
 async def end_demo_call():
     return orchestrator.end_demo_call()
 

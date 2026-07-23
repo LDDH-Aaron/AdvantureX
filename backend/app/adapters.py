@@ -11,16 +11,17 @@ class PhotonAdapter:
 
     @property
     def live(self) -> bool:
-        return bool(self.settings.photon_bridge_url and self.settings.wingman_shared_secret)
+        return bool(self.settings.photon_bridge_url)
 
     async def send(self, recipient: str, message: str) -> dict:
         if not self.live:
             await asyncio.sleep(0.15)
             return {"mode": "demo", "message_id": "simulated"}
         async with httpx.AsyncClient(timeout=20) as client:
+            headers = {"X-Wingman-Secret": self.settings.wingman_shared_secret} if self.settings.wingman_shared_secret else {}
             response = await client.post(
                 f"{self.settings.photon_bridge_url.rstrip('/')}/send",
-                headers={"X-Wingman-Secret": self.settings.wingman_shared_secret},
+                headers=headers,
                 json={"to": recipient, "text": message},
             )
             response.raise_for_status()

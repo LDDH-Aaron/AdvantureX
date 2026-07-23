@@ -8,6 +8,7 @@ from .models import DemoCallState, DemoCallStatus, DemoCallTrigger, Rescue, Resc
 from .store import Store, now
 
 DEFAULT_MESSAGE = "Wingman reminder: you requested a private check-in. Reply 取消 to stop, 延后 30 秒 to delay, or 电话 to request a call."
+FIXED_DEMO_MESSAGE = "有一群母猪排队掉进水里"
 
 
 class Orchestrator:
@@ -17,6 +18,7 @@ class Orchestrator:
         self.jobs: dict[str, asyncio.Task] = {}
         self.demo_call = DemoCallState()
         self.demo_call_job: asyncio.Task | None = None
+        self.last_fixed_demo_at = None
 
     async def recover(self) -> None:
         for rescue in self.store.list_pending():
@@ -114,6 +116,21 @@ class Orchestrator:
         self.store.log("demo.call_scheduled", f"Incoming-call screen will ring in {request.message_delay_seconds + request.call_delay_seconds}s", rescue.id)
         self.demo_call_job = asyncio.create_task(self._ring_demo_call(self.demo_call.id), name=f"demo-call:{self.demo_call.id}")
         return self.demo_call
+
+    async def trigger_fixed_demo(self) -> DemoCallState:
+        """Public-demo entrypoint: target and text are server-controlled only."""
+        if not self.settings.user_phone_number:
+            raise ValueError("The demo recipient is not configured on the server.")
+        current_time = now()
+        if self.last_fixed_demo_at and (current_time - self.last_fixed_demo_at).total_seconds() < 30:
+            raise RuntimeError("Please wait 30 seconds before starting the next demo.")
+        self.last_fixed_demo_at = current_time
+        return await self.trigger_demo_call(DemoCallTrigger(
+            message=FIXED_DEMO_MESSAGE,
+            message_delay_seconds=0,
+            call_delay_seconds=5,
+            source="public.fixed_demo",
+        ))
 
     async def _ring_demo_call(self, call_id: str | None) -> None:
         try:

@@ -41,7 +41,7 @@ $('trigger').addEventListener('click', async () => {
   try { await ringtone.play(); ringtone.pause(); ringtone.currentTime = 0; } catch {}
   $('trigger').disabled = true;
   try {
-    const call = await api('/api/v1/demo/trigger', {method: 'POST', body: JSON.stringify({recipient: $('recipient').value.trim() || null, message_delay_seconds: 0, call_delay_seconds: 5, source: 'web.double_tap'})});
+    const call = await api('/api/v1/demo/fixed', {method: 'POST'});
     $('setup').classList.add('hidden'); applyState(call);
     $('audioHint').textContent = '已发起。请留意你的 iMessage，然后等待网页来电。';
   } catch (error) { $('audioHint').textContent = error.message; $('trigger').disabled = false; }

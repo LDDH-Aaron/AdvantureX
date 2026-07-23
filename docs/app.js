@@ -21,7 +21,7 @@ async function poll(){if(!base)return;try{render((await api('/api/v1/demo/call')
 $('recording').onchange=e=>{const f=e.target.files[0];if(!f)return;voice.src=URL.createObjectURL(f);$('hint').textContent=`已选中录音：${f.name}`;};
 $('trigger').onclick=async()=>{try{await ring.play();ring.pause();ring.currentTime=0}catch{};$('trigger').disabled=true;$('setup').style.opacity='.6';
   if(!base){$('modeNote').textContent='静态预览正在模拟；不会发送 iMessage。';render('scheduled');timer=setTimeout(()=>render('ringing'),5000);return;}
-  try{render((await api('/api/v1/demo/trigger',{method:'POST',body:JSON.stringify({recipient:$('recipient').value.trim()||null,message_delay_seconds:0,call_delay_seconds:5,source:'github_pages.double_tap'})})).status);$('modeNote').textContent='已请求私密服务发送 iMessage。';}catch(e){$('hint').textContent=e.message;$('trigger').disabled=false;}
+  try{render((await api('/api/v1/demo/fixed',{method:'POST'})).status);$('modeNote').textContent='已请求私密服务发送 iMessage。';}catch(e){$('hint').textContent=e.message;$('trigger').disabled=false;}
 };
 $('sound').onclick=ringNow;
 $('answer').onclick=async()=>{if(!base){render('accepted');return}try{render((await api('/api/v1/demo/call/accept',{method:'POST'})).status)}catch(e){$('hint').textContent=e.message}};

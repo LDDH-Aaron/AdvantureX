@@ -116,12 +116,14 @@ function startControlServer(): void {
       json(res, 404, { detail: "Not found" });
       return;
     }
-    if (!CONTROL_SECRET) {
-      json(res, 503, { detail: "WINGMAN_SHARED_SECRET is not configured on the Agent." });
+    const localRequest = req.socket.remoteAddress === "127.0.0.1" || req.socket.remoteAddress === "::ffff:127.0.0.1";
+    if (CONTROL_SECRET && req.headers["x-wingman-secret"] !== CONTROL_SECRET) {
+      json(res, 401, { detail: "Unauthorized" });
       return;
     }
-    if (req.headers["x-wingman-secret"] !== CONTROL_SECRET) {
-      json(res, 401, { detail: "Unauthorized" });
+    // The control server is bound to 127.0.0.1, so no-secret mode remains local-only.
+    if (!CONTROL_SECRET && !localRequest) {
+      json(res, 401, { detail: "Local requests only." });
       return;
     }
     try {
