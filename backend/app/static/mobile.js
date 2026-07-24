@@ -32,7 +32,7 @@ async function unlockAudio() {
     ringtone.volume = 1;
     audioArmed = true;
     $('audioArm').classList.add('hidden');
-    $('audioHint').textContent = '已就绪';
+    $('audioHint').textContent = '';
   } catch {
     ringtone.volume = 1;
     $('audioHint').textContent = '请再点一次进入以启用铃声。';
