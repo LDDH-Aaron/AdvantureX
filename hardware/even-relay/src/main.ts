@@ -177,7 +177,7 @@ app.innerHTML = `
     <section class="panel controls-grid">
       <label class="field">
         <span>Forward endpoint</span>
-        <input id="endpoint" inputmode="url" placeholder="http://30.201.217.2:8787/even" />
+        <input id="endpoint" inputmode="url" placeholder="http://<your-mac-ip>:8788/even" />
       </label>
       <label class="check-field">
         <input id="enabled" type="checkbox" />
@@ -681,10 +681,10 @@ function createTestEvent(): NormalizedEvent {
     id: ++eventId,
     receivedAt: new Date().toISOString(),
     envelope: 'sysEvent',
-    gesture: 'ring.click',
+    gesture: 'ring.double_click',
     source: { code: EventSourceType.TOUCH_EVENT_FROM_RING, label: 'ring', kind: 'ring' },
-    eventType: { code: OsEventTypeList.CLICK_EVENT, label: 'click' },
-    raw: { test: true, eventSource: EventSourceType.TOUCH_EVENT_FROM_RING, eventType: OsEventTypeList.CLICK_EVENT },
+    eventType: { code: OsEventTypeList.DOUBLE_CLICK_EVENT, label: 'double_click' },
+    raw: { test: true, eventSource: EventSourceType.TOUCH_EVENT_FROM_RING, eventType: OsEventTypeList.DOUBLE_CLICK_EVENT },
   }
 }
 
@@ -834,7 +834,7 @@ function saveConfig(config: ForwardConfig) {
 function defaultEndpoint(): string {
   const host = window.location.hostname
   if (!host || host === 'localhost' || host === '127.0.0.1') return ''
-  return `http://${host}:8787/even`
+  return `http://${host}:8788/even`
 }
 
 function endpointHostLabel(): string {

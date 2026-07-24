@@ -15,17 +15,25 @@ Then either:
 
 ## Relay to Hardware
 
-Run the Mac relay server:
+Run the Ring → Wingman relay server in a third terminal. `8788` is deliberate:
+`8787` belongs to the Photon iMessage Agent.
 
 ```bash
-npm run relay
+npm run relay:wingman
 ```
 
 On the phone console page, set the forward endpoint to:
 
 ```text
-http://<your-mac-ip>:8787/even
+http://<your-mac-ip>:8788/even
 ```
+
+Enable **Forward events**, leave **No-CORS** off, and press **Save**. A physical
+R1 **double-click** (or the console's **Send test** button)
+is forwarded locally to Wingman. Wingman sends the configured iMessage, waits
+10 seconds, then places the published mobile page into its incoming-call state.
+Tap **接听** on that page to play the configured MP3. Single clicks remain normal
+R1 selection events and do not send messages.
 
 The relay accepts:
 
@@ -58,7 +66,7 @@ Payload shape:
 To have the Mac relay forward events to another device:
 
 ```bash
-FORWARD_URL=http://192.168.1.50/gesture npm run relay
+PORT=8788 FORWARD_URL=http://192.168.1.50/gesture npm run relay
 ```
 
 If posting directly from the phone to a microcontroller that cannot return CORS headers, enable `No-CORS fire-and-forget` in the page. The request body is still JSON, but it is sent as `text/plain` so simple hardware endpoints can receive it.

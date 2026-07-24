@@ -18,7 +18,7 @@ Even App (iOS/Android)
       ↓ (WebView bridge)
 手机 Web 页面 (Vite dev server)
       ↓ (HTTP POST)
-Mac Relay Server (:8787)
+Mac Relay Server (:8788)
       ↓ (HTTP POST, optional)
 目标硬件 / 微控制器 / 服务端
 ```
@@ -31,7 +31,7 @@ Mac Relay Server (:8787)
 
 | 属性 | 值 |
 |------|-----|
-| **URL** | `http://<mac-ip>:8787/even` |
+| **URL** | `http://<mac-ip>:8788/even` |
 | **Method** | `POST` |
 | **Content-Type** | `application/json` |
 | **CORS** | `Access-Control-Allow-Origin: *` |
@@ -55,7 +55,7 @@ Mac Relay Server (:8787)
 
 ```
 POST /even HTTP/1.1
-Host: <relay-or-hardware-ip>:8787
+Host: <relay-or-hardware-ip>:8788
 Content-Type: application/json
 ```
 
@@ -480,7 +480,7 @@ http.createServer((req, res) => {
 
 | 环境变量 | 默认值 | 含义 |
 |----------|--------|------|
-| `PORT` | `8787` | Relay 监听端口 |
+| `PORT` | `8788` | Relay 监听端口 |
 | `FORWARD_URL` | *(空)* | 二级转发目标 URL（留空则仅接收） |
 | `MAX_BODY_BYTES` | `1048576` | 最大请求体字节数 |
 

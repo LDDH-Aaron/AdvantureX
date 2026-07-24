@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "pack": "evenhub pack app.json dist -o out.ehpk",
     "relay": "node tools/relay-server.mjs",
+    "relay:wingman": "PORT=8788 FORWARD_URL=http://127.0.0.1:8000/api/v1/hardware/even node tools/relay-server.mjs",
     "simulate": "evenhub-simulator http://localhost:5173"
   },
   "dependencies": {

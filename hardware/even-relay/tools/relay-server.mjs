@@ -1,6 +1,6 @@
 import http from 'node:http'
 
-const port = Number(process.env.PORT ?? 8787)
+const port = Number(process.env.PORT ?? 8788)
 const forwardUrl = process.env.FORWARD_URL ?? ''
 const maxBodyBytes = Number(process.env.MAX_BODY_BYTES ?? 1024 * 1024)
 

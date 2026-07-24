@@ -1,6 +1,6 @@
 from datetime import datetime
 from enum import Enum
-from typing import Literal
+from typing import Any, Literal
 from pydantic import BaseModel, Field
 
 
@@ -36,6 +36,14 @@ class DemoCallTrigger(BaseModel):
     message_delay_seconds: int = Field(default=0, ge=0, le=60)
     call_delay_seconds: int = Field(default=5, ge=1, le=60)
     source: str = "web.double_tap"
+
+
+class EvenRelayPayload(BaseModel):
+    """Minimum safe envelope accepted from the local Even R1 relay."""
+
+    schema: Literal["even-r1-relay/v1"]
+    event: dict[str, Any]
+    action: dict[str, Any] | None = None
 
 
 class ZiloEvent(BaseModel):
