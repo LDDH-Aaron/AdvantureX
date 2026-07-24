@@ -3,17 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-  <meta name="theme-color" content="#101115">
-  <title>Wingman 来电</title>
+  <meta name="theme-color" content="#000000">
+  <title>Wingman</title>
   <link rel="stylesheet" href="/static/mobile.css">
 </head>
 <body>
   <main class="phone-shell">
-    <section class="ios-call" aria-live="polite">
-      <header class="status-bar" aria-label="状态栏">
-        <span id="clock">9:41</span><span class="dynamic-island"></span><span class="signal">▮▮▮ 5G&nbsp; ▰</span>
-      </header>
-
+    <section class="experience" aria-live="polite">
       <section class="standby-screen" id="standbyScreen">
         <div class="standby-orbit"><i></i><i></i><span>R1</span></div>
         <p class="standby-kicker">SNAKE ONE</p>
@@ -26,19 +22,13 @@
         <button class="more-button" id="more" aria-label="更多选项">•••</button>
         <div class="more-sheet hidden" id="moreSheet"><button id="subtitle">显示字幕</button></div>
         <section class="caller">
-        <div class="avatar-ring"><img src="/static/assets/wingman-avatar.png" alt="Wingman 头像"></div>
-        <h1>Wingman</h1>
-        <p class="call-kind">私人助理来电</p>
-        <p id="status" class="status">等待你的戒指触发</p>
-        <div id="dots" class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-        <p id="caption" class="caption">双击戒指后，Wingman 会在这里呼叫你。</p>
+          <div class="avatar-ring"><img src="/static/assets/wingman-avatar.png" alt="Wingman 头像"></div>
+          <h1>Wingman</h1>
+          <p class="call-kind">私人助理来电</p>
+          <p id="status" class="status">Wingman 正在呼叫你</p>
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <p id="caption" class="caption">向右滑动来接听。</p>
         </section>
-      </section>
-
-      <section class="setup" id="setup">
-        <p class="fixed-message">救场信息：<strong>“有一群母猪排队掉进水里”</strong></p>
-        <label>替换接听录音（可选 MP3）<input id="recording" type="file" accept="audio/mpeg,audio/mp3,audio/*"></label>
-        <button id="trigger" class="demo-trigger">模拟戒指双击</button>
       </section>
 
       <section class="incoming-actions hidden" id="incomingActions" aria-label="来电操作">
@@ -49,13 +39,12 @@
       </section>
       <p id="audioHint" class="audio-hint"></p>
 
-      <section class="audio-arm" id="audioArm" aria-label="准备接收来电">
-        <div class="audio-arm-card">
-          <span class="speaker-icon">⌁</span>
-          <h2>准备接收 Wingman 来电</h2>
-          <p>点一次后，戒指触发的来电会自动播放铃声。</p>
-          <button id="armAudio">准备接听</button>
-        </div>
+      <section class="audio-arm" id="audioArm" aria-label="进入体验">
+        <button id="armAudio" class="enter-button">
+          <span>R1</span>
+          <strong>点击进入</strong>
+          <small>开启全屏与来电铃声</small>
+        </button>
       </section>
     </section>
   </main>

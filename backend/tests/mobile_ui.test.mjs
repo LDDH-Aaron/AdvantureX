@@ -28,3 +28,16 @@ test('idle and completed calls return to a distinct standby screen', async () =>
   assert.match(script, /function showStandby/);
   assert.match(script, /call\.status === 'ended'/);
 });
+
+test('standby is a minimal fullscreen entry without demo controls or fake status chrome', async () => {
+  const [html, script] = await Promise.all([
+    readFile(new URL('mobile.html', staticRoot), 'utf8'),
+    readFile(new URL('mobile.js', staticRoot), 'utf8'),
+  ]);
+
+  assert.doesNotMatch(html, /id="recording"/);
+  assert.doesNotMatch(html, /id="trigger"/);
+  assert.doesNotMatch(html, /class="status-bar"/);
+  assert.match(html, /点击进入/);
+  assert.match(script, /requestFullscreen/);
+});
