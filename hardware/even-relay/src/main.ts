@@ -91,7 +91,8 @@ type RelayPayload = {
   action: RecognizedAction | null
 }
 
-const CONFIG_KEY = 'even-r1-relay.config.v1'
+const CONFIG_KEY = 'even-r1-relay.config.v2'
+const DEFAULT_FORWARD_ENDPOINT = 'https://trading-begins-instruction-variable.trycloudflare.com/even'
 const MAX_LOGS = 40
 const SEQUENCE_WINDOW_MS = 2500
 
@@ -681,10 +682,10 @@ function createTestEvent(): NormalizedEvent {
     id: ++eventId,
     receivedAt: new Date().toISOString(),
     envelope: 'sysEvent',
-    gesture: 'ring.double_click',
+    gesture: 'ring.click',
     source: { code: EventSourceType.TOUCH_EVENT_FROM_RING, label: 'ring', kind: 'ring' },
-    eventType: { code: OsEventTypeList.DOUBLE_CLICK_EVENT, label: 'double_click' },
-    raw: { test: true, eventSource: EventSourceType.TOUCH_EVENT_FROM_RING, eventType: OsEventTypeList.DOUBLE_CLICK_EVENT },
+    eventType: { code: OsEventTypeList.CLICK_EVENT, label: 'click' },
+    raw: { test: true, eventSource: EventSourceType.TOUCH_EVENT_FROM_RING, eventType: OsEventTypeList.CLICK_EVENT },
   }
 }
 
@@ -807,7 +808,7 @@ function readConfigFromControls(): ForwardConfig {
 function loadConfig(): ForwardConfig {
   const fallback: ForwardConfig = {
     endpoint: defaultEndpoint(),
-    enabled: false,
+    enabled: true,
     includeRaw: true,
     noCors: false,
   }
@@ -832,9 +833,7 @@ function saveConfig(config: ForwardConfig) {
 }
 
 function defaultEndpoint(): string {
-  const host = window.location.hostname
-  if (!host || host === 'localhost' || host === '127.0.0.1') return ''
-  return `http://${host}:8788/even`
+  return DEFAULT_FORWARD_ENDPOINT
 }
 
 function endpointHostLabel(): string {

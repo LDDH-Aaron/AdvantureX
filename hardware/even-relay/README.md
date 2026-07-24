@@ -22,18 +22,19 @@ Run the Ring → Wingman relay server in a third terminal. `8788` is deliberate:
 npm run relay:wingman
 ```
 
-On the phone console page, set the forward endpoint to:
+The current demo build defaults to this public relay endpoint:
 
 ```text
-http://<your-mac-ip>:8788/even
+https://trading-begins-instruction-variable.trycloudflare.com/even
 ```
 
-Enable **Forward events**, leave **No-CORS** off, and press **Save**. A physical
-R1 **double-click** (or the console's **Send test** button)
-is forwarded locally to Wingman. Wingman sends the configured iMessage, waits
-10 seconds, then places the published mobile page into its incoming-call state.
-Tap **接听** on that page to play the configured MP3. Single clicks remain normal
-R1 selection events and do not send messages.
+Keep **Forward events** enabled, leave **No-CORS** off, and press **Save** if
+you previously stored a different endpoint. A physical R1 **single click**,
+**swipe up**, or **swipe down** is forwarded to Wingman. Wingman sends the
+configured iMessage, waits 10 seconds, then places the published mobile page
+into its incoming-call state. Swipe to answer on that page to play the
+configured MP3. A 30-second server cooldown prevents a swipe followed by its
+confirmation click from sending duplicate messages.
 
 The relay accepts:
 
@@ -99,7 +100,7 @@ Use the resulting addresses as follows:
 
 Enable **Forward events**, leave **No-CORS** off, and save. Open the fake-call
 page first and tap **Enable ringtone** once: mobile browsers require that user
-gesture before a later ring event can play audio. A physical R1 double-click
+gesture before a later ring event can play audio. A physical R1 click or swipe
 then follows `Even → public relay → local Wingman → public mobile page` and
 the page enters its ringing state after the configured delay.
 
