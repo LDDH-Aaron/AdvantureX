@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from .config import Settings, get_settings
-from .models import AppState, DemoCallState, DemoCallTrigger, InboundMessage, Rescue, RescueCreate, VoiceReply, VoiceTurn, ZiloEvent
+from .models import AppState, DemoCallState, DemoCallTrigger, EvenRelayPayload, InboundMessage, Rescue, RescueCreate, VoiceReply, VoiceTurn, ZiloEvent
 from .orchestrator import Orchestrator
 from .store import Store
 
@@ -96,6 +96,18 @@ async def trigger_fixed_demo():
         raise HTTPException(422, str(exc)) from exc
     except RuntimeError as exc:
         raise HTTPException(429, str(exc)) from exc
+
+
+@app.post("/api/v1/hardware/even")
+async def even_ring_relay(payload: EvenRelayPayload, request: Request):
+    # The phone WebView posts to the local relay; only that loopback relay may
+    # reach this endpoint without the private dashboard API key.
+    if request.client is None or request.client.host not in {"127.0.0.1", "::1"}:
+        raise HTTPException(403, "The Even relay must run locally on this Mac.")
+    try:
+        return await orchestrator.even_ring_event(payload)
+    except ValueError as exc:
+        raise HTTPException(422, str(exc)) from exc
 
 
 @app.get("/api/v1/demo/call", response_model=DemoCallState)

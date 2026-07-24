@@ -4,7 +4,7 @@ import uuid
 from datetime import timedelta
 from .adapters import PhoneAdapter, PhotonAdapter
 from .config import Settings
-from .models import DemoCallState, DemoCallStatus, DemoCallTrigger, Rescue, RescueCreate, Status, VoiceReply
+from .models import DemoCallState, DemoCallStatus, DemoCallTrigger, EvenRelayPayload, Rescue, RescueCreate, Status, VoiceReply
 from .store import Store, now
 
 DEFAULT_MESSAGE = "Wingman reminder: you requested a private check-in. Reply 取消 to stop, 延后 30 秒 to delay, or 电话 to request a call."
@@ -117,7 +117,7 @@ class Orchestrator:
         self.demo_call_job = asyncio.create_task(self._ring_demo_call(self.demo_call.id), name=f"demo-call:{self.demo_call.id}")
         return self.demo_call
 
-    async def trigger_fixed_demo(self) -> DemoCallState:
+    async def trigger_fixed_demo(self, *, call_delay_seconds: int = 5, source: str = "public.fixed_demo") -> DemoCallState:
         """Public-demo entrypoint: target and text are server-controlled only."""
         if not self.settings.user_phone_number:
             raise ValueError("The demo recipient is not configured on the server.")
@@ -128,9 +128,32 @@ class Orchestrator:
         return await self.trigger_demo_call(DemoCallTrigger(
             message=FIXED_DEMO_MESSAGE,
             message_delay_seconds=0,
-            call_delay_seconds=5,
-            source="public.fixed_demo",
+            call_delay_seconds=call_delay_seconds,
+            source=source,
         ))
+
+    async def even_ring_event(self, payload: EvenRelayPayload) -> dict[str, object]:
+        """Map the local Even R1 relay's double-click to the fixed private demo."""
+        event = payload.event
+        source = event.get("source") if isinstance(event.get("source"), dict) else {}
+        source_kind = str(source.get("kind", "unknown"))
+        gesture = str(event.get("gesture", "unknown"))
+        action_name = str(payload.action.get("name", "")) if payload.action else ""
+        self.store.log("ring.event", f"{source_kind} {gesture} action={action_name or 'none'}")
+
+        # The R1 page reports a normalized double-click. A single click remains
+        # available for ordinary UI selection and never sends a surprise message.
+        is_trigger = source_kind == "ring" and (
+            gesture == "ring.double_click" or action_name == "ring_cancel_or_shortcut"
+        )
+        if not is_trigger:
+            return {"ok": True, "accepted": False, "reason": "Ring double-click required."}
+
+        try:
+            call = await self.trigger_fixed_demo(call_delay_seconds=10, source="ring.double_click")
+        except RuntimeError as exc:
+            return {"ok": False, "accepted": False, "reason": str(exc)}
+        return {"ok": True, "accepted": True, "call_id": call.id, "ring_at": call.ring_at}
 
     async def _ring_demo_call(self, call_id: str | None) -> None:
         try:
