@@ -47,19 +47,31 @@ async function playRingtone() {
 
 function stopRingtone() { ringtone.pause(); ringtone.currentTime = 0; }
 function resetSlider() { $('answerKnob').style.transform = ''; $('answerSlider').classList.remove('is-dragging'); }
+function showStandby() {
+  $('standbyScreen').classList.remove('hidden');
+  $('callScreen').classList.add('hidden');
+  $('incomingActions').classList.add('hidden');
+  $('setup').classList.remove('hidden');
+}
+function showCall() {
+  $('standbyScreen').classList.add('hidden');
+  $('callScreen').classList.remove('hidden');
+  $('incomingActions').classList.remove('hidden');
+  $('setup').classList.add('hidden');
+}
 
 function applyState(call) {
   if (call.status === lastStatus) return;
   lastStatus = call.status;
   const isRinging = call.status === 'ringing';
+  const isCallActive = ['scheduled', 'ringing', 'accepted'].includes(call.status);
+  if (isCallActive) showCall(); else showStandby();
   $('answerSlider').classList.toggle('hidden', !isRinging);
   $('decline').classList.toggle('hidden', !['scheduled', 'ringing', 'accepted'].includes(call.status));
-  $('setup').classList.toggle('hidden', call.status !== 'idle');
   if (call.status === 'scheduled') setText('Wingman 即将呼叫', '戒指信号已收到，请保持在这个页面。');
   if (isRinging) { setText('Wingman 正在呼叫你', '向右滑动来接听。'); playRingtone(); }
   if (call.status === 'accepted') { stopRingtone(); resetSlider(); setText('已接听', '正在播放私人提醒语音…'); voice.play().catch(() => $('audioHint').textContent = '请轻触屏幕后播放语音。'); }
-  if (call.status === 'declined') { stopRingtone(); resetSlider(); setText('来电已挂断', '双击戒指可再次发起救场。'); }
-  if (call.status === 'ended') { stopRingtone(); setText('通话结束', 'Wingman 随时待命。'); }
+  if (call.status === 'declined' || call.status === 'ended' || call.status === 'idle') { stopRingtone(); resetSlider(); }
 }
 
 async function answerCall() {
