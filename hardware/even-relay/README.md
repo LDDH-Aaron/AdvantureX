@@ -71,6 +71,42 @@ PORT=8788 FORWARD_URL=http://192.168.1.50/gesture npm run relay
 
 If posting directly from the phone to a microcontroller that cannot return CORS headers, enable `No-CORS fire-and-forget` in the page. The request body is still JSON, but it is sent as `text/plain` so simple hardware endpoints can receive it.
 
+## Phone on cellular data: temporary public demo
+
+When the phone is on 4G/5G and the Mac is on a separate robot or venue
+network, the phone cannot reach `http://<your-mac-ip>`. Keep Wingman and the
+relay on the Mac, then expose **two temporary HTTPS tunnels**:
+
+```bash
+# Terminal 1, from the repository root. Leave PHOTON_BRIDGE_URL blank for a
+# fake-call-only demo; USER_PHONE_NUMBER may be a non-deliverable demo value.
+uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port 8000
+
+# Terminal 2, from hardware/even-relay.
+npm run relay:wingman
+
+# Terminals 3 and 4. Each command prints a different trycloudflare.com URL.
+cloudflared tunnel --url http://127.0.0.1:8788
+cloudflared tunnel --url http://127.0.0.1:8000
+```
+
+Use the resulting addresses as follows:
+
+| Address | Put it here |
+|---|---|
+| `https://<relay>.trycloudflare.com/even` | Even page's **Forward endpoint** |
+| `https://<wingman>.trycloudflare.com/mobile` | Phone's fake incoming-call page |
+
+Enable **Forward events**, leave **No-CORS** off, and save. Open the fake-call
+page first and tap **Enable ringtone** once: mobile browsers require that user
+gesture before a later ring event can play audio. A physical R1 double-click
+then follows `Even → public relay → local Wingman → public mobile page` and
+the page enters its ringing state after the configured delay.
+
+Quick tunnels are public and short-lived. Do not put Photon credentials in the
+Even page, and stop both tunnel processes after the demo. For a production
+deployment, use authenticated named tunnels and protect the event endpoint.
+
 ## Pack for distribution
 
 ```bash
