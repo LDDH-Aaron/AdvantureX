@@ -32,13 +32,7 @@ html,body{overscroll-behavior:none;}
     padding-bottom:0;
   }
   .statusbar{
-    display:block!important;
-    visibility:hidden!important;
-    overflow:hidden!important;
-    height:env(safe-area-inset-top)!important;
-    min-height:env(safe-area-inset-top)!important;
-    flex:0 0 env(safe-area-inset-top)!important;
-    padding:0!important;
+    display:none!important;
   }
   .tabbar,.dock{
     position:fixed!important;
