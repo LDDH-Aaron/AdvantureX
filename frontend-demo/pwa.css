@@ -41,6 +41,9 @@ html,body{overscroll-behavior:none;}
     padding:0!important;
   }
   .tabbar,.dock{
+    position:fixed!important;
+    left:0!important;
+    right:0!important;
     bottom:0!important;
   }
   .tabbar{
