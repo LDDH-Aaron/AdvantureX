@@ -36,6 +36,11 @@ class EvenRescueSequenceTest(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(result["accepted"])
         self.orchestrator.trigger_fixed_demo.assert_not_awaited()
 
+    async def test_raw_click_does_not_trigger_rescue(self):
+        result = await self.orchestrator.even_ring_event(payload("ring.click", None))
+        self.assertFalse(result["accepted"])
+        self.orchestrator.trigger_fixed_demo.assert_not_awaited()
+
     async def test_semantic_rescue_action_triggers_once(self):
         result = await self.orchestrator.even_ring_event(
             payload("ring.click", "snake1_rescue")
