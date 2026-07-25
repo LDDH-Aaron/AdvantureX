@@ -3,7 +3,7 @@
   "short_name": "Snake",
   "description": "让 AI 在现实中拯救你的无助时刻",
   "id": "./",
-  "start_url": "./index.html?v=20260725-5",
+  "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
