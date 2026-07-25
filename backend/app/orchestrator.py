@@ -133,7 +133,7 @@ class Orchestrator:
         ))
 
     async def even_ring_event(self, payload: EvenRelayPayload) -> dict[str, object]:
-        """Map an intentional R1 navigation gesture to the fixed private demo."""
+        """Map an authorized semantic Even R1 rescue action to the fixed demo."""
         event = payload.event
         source = event.get("source") if isinstance(event.get("source"), dict) else {}
         source_kind = str(source.get("kind", "unknown"))
@@ -141,26 +141,19 @@ class Orchestrator:
         action_name = str(payload.action.get("name", "")) if payload.action else ""
         self.store.log("ring.event", f"{source_kind} {gesture} action={action_name or 'none'}")
 
-        # The new ring UI uses either a selection click or a vertical swipe.
-        # The existing fixed-demo cooldown de-duplicates a swipe followed by its
-        # confirmation click, so that sequence still sends only one iMessage.
-        trigger_gestures = {"ring.click", "ring.swipe_up", "ring.swipe_down"}
-        trigger_actions = {
-            "ring_select",
-            "ring_previous",
-            "ring_next",
-            "ring_confirm_up",
-            "ring_confirm_down",
-        }
-        is_trigger = source_kind == "ring" and (
-            gesture in trigger_gestures or action_name in trigger_actions
-        )
+        is_trigger = source_kind == "ring" and action_name == "snake1_rescue"
         if not is_trigger:
-            return {"ok": True, "accepted": False, "reason": "Ring click or swipe required."}
+            return {
+                "ok": True,
+                "accepted": False,
+                "reason": "Deliberate SNAKE1 rescue sequence required.",
+            }
 
         try:
-            event_source = gesture if gesture in trigger_gestures else action_name
-            call = await self.trigger_fixed_demo(call_delay_seconds=10, source=event_source)
+            call = await self.trigger_fixed_demo(
+                call_delay_seconds=10,
+                source="ring.snake1_rescue",
+            )
         except RuntimeError as exc:
             return {"ok": False, "accepted": False, "reason": str(exc)}
         return {"ok": True, "accepted": True, "call_id": call.id, "ring_at": call.ring_at}
