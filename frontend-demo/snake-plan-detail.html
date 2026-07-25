@@ -190,7 +190,8 @@
       <section class="sec">
         <div class="sec-h"><span class="hash">T</span><b>测试预案</b><span class="hint">可选</span></div>
         <div class="card" style="padding:12px">
-          <button type="button" style="width:100%;height:46px;background:var(--sun);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font:800 13px var(--ui);color:var(--ink)">手动测试</button>
+          <button id="testSkillBtn" type="button" style="width:100%;height:46px;background:var(--sun);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font:800 13px var(--ui);color:var(--ink)">手动测试</button>
+          <div id="testSkillResult" style="display:none;margin-top:10px;padding:9px;border:2px dashed var(--ink);font:700 10px var(--mono);color:#256b3a">✓ 预案结构检查通过 · 未执行真实动作</div>
         </div>
       </section>
 
@@ -208,6 +209,11 @@
   }else{
     document.getElementById('loopCard').innerHTML='<div class="loop-row"><span class="loop-no">1</span><span class="loop-copy"><b>收到暗号</b><small>双击 Ring 01</small></span><span class="loop-tag">WHEN</span></div><div class="loop-row"><span class="loop-no">2</span><span class="loop-copy"><b>识别时机</b><small>确认处于社交场景</small></span><span class="loop-tag">CHECK</span></div><div class="loop-row"><span class="loop-no">3</span><span class="loop-copy"><b>拨打电话</b><small>来电身份显示为「妈妈」</small></span><span class="loop-tag">DO</span></div><div class="loop-row"><span class="loop-no">4</span><span class="loop-copy"><b>播报理由</b><small>家里有急事，让你马上回去</small></span><span class="loop-tag">SAY</span></div><div class="loop-row"><span class="loop-no">5</span><span class="loop-copy"><b>确认结果</b><small>未接听则 20 秒后重试一次</small></span><span class="loop-tag">LOOP</span></div>';
   }
+  document.getElementById('testSkillBtn').addEventListener('click',function(){
+    this.textContent='正在检查 Loop…';this.disabled=true;
+    var btn=this,res=document.getElementById('testSkillResult');
+    setTimeout(function(){btn.textContent='重新测试';btn.disabled=false;res.style.display='block';},900);
+  });
 })();
 </script>
 </body>

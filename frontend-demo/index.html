@@ -278,7 +278,7 @@
 <script>
 (function(){
   if(new URLSearchParams(location.search).get('reset')==='1'){
-    ['snake_ring_added','snake_dog_added','snake_plan_exit','snake_plan_icebreak'].forEach(function(k){localStorage.removeItem(k);});
+    ['snake_ring_added','snake_ring_name','snake_dog_added','snake_dog_name','snake_plan_exit','snake_plan_icebreak'].forEach(function(k){localStorage.removeItem(k);});
     history.replaceState({},'',location.pathname);
   }
   var toastEl=document.getElementById('toast'),toastT;

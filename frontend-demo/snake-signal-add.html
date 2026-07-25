@@ -19,8 +19,8 @@
     <div class="intro"><h2 id="formTitle">设置一个暗号</h2><p>用一个现实动作，快速唤起指定预案</p></div>
     <form class="form" id="signalForm">
       <div class="field"><label for="signalName">设备名称</label><input class="control" id="signalName" name="signalName" placeholder="例如：Ring 01" required /></div>
-      <div class="field"><label for="device">暗号设备</label><select class="control" id="device" name="device"><option value="">请选择设备</option><option>智能戒指</option><option>右耳耳机</option></select></div>
-      <div class="field"><label for="gesture">触发动作</label><select class="control" id="gesture" name="gesture"><option value="">请选择动作</option><option>双击</option><option>长按</option></select></div>
+      <div class="field"><label for="device">暗号设备</label><select class="control" id="device" name="device" required><option value="">请选择设备</option><option>智能戒指</option><option>右耳耳机</option></select></div>
+      <div class="field"><label for="gesture">触发动作</label><select class="control" id="gesture" name="gesture" required><option value="">请选择动作</option><option>双击</option><option>长按</option></select></div>
       <div class="field"><label for="plan">默认关联（可选）</label><select class="control" id="plan" name="plan"><option value="">暂不关联预案</option><option>救急脱身</option><option>深夜报平安</option></select><div class="hint">也可以在创建预案时再选择这个暗号</div></div>
       <button class="save" type="submit" id="saveBtn">保存暗号</button>
     </form>
@@ -31,8 +31,10 @@
 (function(){
   var editing=new URLSearchParams(location.search).get('mode')==='edit';
   if(editing){document.body.classList.add('editing');document.title='Snake · 编辑暗号';document.getElementById('pageTitle').textContent='编辑暗号';document.getElementById('formTitle').textContent='双击 Ring 01';document.getElementById('saveBtn').textContent='保存修改';document.getElementById('signalName').value='Ring 01';document.getElementById('device').value='智能戒指';document.getElementById('gesture').value='双击'}
-  document.getElementById('signalForm').addEventListener('submit',function(e){e.preventDefault();localStorage.setItem('snake_ring_added','1');location.href='snake-signal-config.html'});
-  document.getElementById('deleteBtn').addEventListener('click',function(){location.href='snake-signal-config.html'});
+  var device=document.getElementById('device'),name=document.getElementById('signalName'),gesture=document.getElementById('gesture');
+  device.addEventListener('change',function(){if(device.value==='智能戒指'){name.value='Ring 01';gesture.value='双击';}if(device.value==='右耳耳机'){name.value='右耳耳机';gesture.value='长按';}});
+  document.getElementById('signalForm').addEventListener('submit',function(e){e.preventDefault();localStorage.setItem('snake_ring_added','1');localStorage.setItem('snake_ring_name',name.value.trim()||'Ring 01');location.href='snake-signal-config.html?added=ring'});
+  document.getElementById('deleteBtn').addEventListener('click',function(){localStorage.removeItem('snake_ring_added');localStorage.removeItem('snake_ring_name');location.href='snake-signal-config.html?removed=1'});
 })();
 </script>
 </body></html>

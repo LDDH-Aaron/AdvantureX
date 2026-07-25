@@ -18,10 +18,10 @@
   <main class="body">
     <div class="intro"><h2 id="formTitle">添加一件装备</h2><p>授权给 Snake，在需要时调用</p></div>
     <form class="form" id="toolForm">
-      <div class="field"><label for="toolType">装备类型</label><select class="control" id="toolType" name="toolType"><option value="">请选择类型</option><option>电话</option><option>机器狗</option><option>耳机</option></select></div>
+      <div class="field"><label for="toolType">装备类型</label><select class="control" id="toolType" name="toolType" required><option value="">请选择类型</option><option>电话</option><option value="机器狗">机械狗</option><option>耳机</option></select></div>
       <div class="field"><label for="toolName">装备名称</label><input class="control" id="toolName" name="toolName" placeholder="例如：我的电话" required /></div>
-      <div class="field"><label for="connection">连接方式</label><select class="control" id="connection" name="connection"><option value="">请选择连接方式</option><option>本机授权</option><option>蓝牙连接</option><option>局域网连接</option></select></div>
-      <div class="field"><label for="ability">允许 Snake 使用</label><select class="control" id="ability" name="ability"><option value="">请选择能力</option><option>拨打救急来电</option><option>示好并展示联系方式</option><option>播放语音提示</option></select><div class="hint">Snake 只会获得你在这里选择的能力</div></div>
+      <div class="field"><label for="connection">连接方式</label><select class="control" id="connection" name="connection" required><option value="">请选择连接方式</option><option>本机授权</option><option>蓝牙连接</option><option>局域网连接</option></select></div>
+      <div class="field"><label for="ability">允许 Snake 使用</label><select class="control" id="ability" name="ability" required><option value="">请选择能力</option><option>拨打救急来电</option><option>示好并展示联系方式</option><option>播放语音提示</option></select><div class="hint">Snake 只会获得你在这里选择的能力</div></div>
       <button class="save" type="submit" id="saveBtn">添加装备</button>
     </form>
     <button class="delete" id="deleteBtn" type="button">移除这件装备</button>
@@ -31,8 +31,25 @@
 (function(){
   var mode=new URLSearchParams(location.search).get('mode'),editing=mode==='edit'||mode==='dog';
   if(editing){document.body.classList.add('editing');document.title='Snake · 编辑装备';document.getElementById('pageTitle').textContent='编辑装备';document.getElementById('saveBtn').textContent='保存修改';if(mode==='dog'){document.getElementById('formTitle').textContent='机器狗';document.getElementById('toolType').value='机器狗';document.getElementById('toolName').value='机器狗';document.getElementById('connection').value='局域网连接';document.getElementById('ability').value='示好并展示联系方式'}else{document.getElementById('formTitle').textContent='电话';document.getElementById('toolType').value='电话';document.getElementById('toolName').value='电话';document.getElementById('connection').value='本机授权';document.getElementById('ability').value='拨打救急来电'}}
-  document.getElementById('toolForm').addEventListener('submit',function(e){e.preventDefault();if(document.getElementById('toolType').value==='机器狗')localStorage.setItem('snake_dog_added','1');location.href='snake-tool-config.html'});
-  document.getElementById('deleteBtn').addEventListener('click',function(){location.href='snake-tool-config.html'});
+  var type=document.getElementById('toolType'),name=document.getElementById('toolName'),connection=document.getElementById('connection'),ability=document.getElementById('ability');
+  type.addEventListener('change',function(){
+    if(type.value==='机器狗'){name.value='机械狗';connection.value='局域网连接';ability.value='示好并展示联系方式';}
+    if(type.value==='电话'){name.value='电话';connection.value='本机授权';ability.value='拨打救急来电';}
+    if(type.value==='耳机'){name.value='我的耳机';connection.value='蓝牙连接';ability.value='播放语音提示';}
+  });
+  document.getElementById('toolForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    if(type.value==='机器狗'){
+      localStorage.setItem('snake_dog_added','1');
+      localStorage.setItem('snake_dog_name',name.value.trim()||'机械狗');
+      location.href='snake-tool-config.html?added=dog';return;
+    }
+    location.href='snake-tool-config.html?updated=1';
+  });
+  document.getElementById('deleteBtn').addEventListener('click',function(){
+    if(mode==='dog'){localStorage.removeItem('snake_dog_added');localStorage.removeItem('snake_dog_name');}
+    location.href='snake-tool-config.html?removed=1';
+  });
 })();
 </script>
 </body></html>
