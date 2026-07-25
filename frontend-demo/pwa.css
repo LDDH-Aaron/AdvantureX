@@ -28,11 +28,17 @@ html,body{overscroll-behavior:none;}
     width:100%!important;
     height:100%!important;
     border-radius:0!important;
-    padding-top:env(safe-area-inset-top);
+    padding-top:0;
     padding-bottom:0;
   }
   .statusbar{
-    display:none!important;
+    display:block!important;
+    visibility:hidden!important;
+    overflow:hidden!important;
+    height:env(safe-area-inset-top)!important;
+    min-height:env(safe-area-inset-top)!important;
+    flex:0 0 env(safe-area-inset-top)!important;
+    padding:0!important;
   }
   .tabbar,.dock{
     bottom:0!important;
