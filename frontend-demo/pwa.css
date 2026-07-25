@@ -29,12 +29,16 @@ html,body{overscroll-behavior:none;}
     height:100%!important;
     border-radius:0!important;
     padding-top:env(safe-area-inset-top);
-    padding-bottom:env(safe-area-inset-bottom);
+    padding-bottom:0;
   }
   .statusbar{
     display:none!important;
   }
   .tabbar,.dock{
-    bottom:env(safe-area-inset-bottom)!important;
+    bottom:0!important;
+  }
+  .tabbar{
+    height:calc(64px + env(safe-area-inset-bottom))!important;
+    padding-bottom:env(safe-area-inset-bottom)!important;
   }
 }

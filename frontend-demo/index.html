@@ -131,6 +131,41 @@
   .tab:active{transform:translateY(2px);}
   .tab.active{background:var(--sun);color:var(--ink);}
   .tab.active::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--pink);}
+
+  /* installed app: keep the same visual language, but scale with the phone */
+  @media (max-width:600px){
+    .app{padding-bottom:calc(74px + env(safe-area-inset-bottom));}
+    .head{padding:clamp(9px,1.4vh,12px) clamp(14px,4vw,20px);}
+    .logo .mark{width:clamp(25px,7vw,30px);height:clamp(25px,7vw,30px);}
+    .logo .wm{font-size:clamp(21px,6vw,26px);}
+    .greet{padding:clamp(16px,2.8vh,24px) clamp(16px,5vw,22px) 0;}
+    .greet .hi{font-size:clamp(28px,8.2vw,36px);}
+    .greet .sub{font-size:clamp(15px,4.2vw,18px);}
+    .greet .intro{font-size:clamp(11px,3vw,13px);}
+    .stage{padding:clamp(2px,1vh,8px) clamp(12px,4vw,20px);}
+    .portrait{width:clamp(156px,48vw,202px);max-width:none;}
+    .stand{width:min(40vw,160px);}
+    .stand .s1{width:min(40vw,160px);}
+    .stand .s2{width:min(30vw,120px);}
+    .side{gap:clamp(12px,2vh,17px);}
+    .side.left{left:clamp(12px,4vw,18px);}
+    .side.right{right:clamp(12px,4vw,18px);}
+    .rnd{width:clamp(52px,15vw,62px);height:clamp(52px,15vw,62px);}
+    .moment-label{padding-left:clamp(14px,4vw,18px);}
+    .inbar{margin:clamp(8px,1.5vh,12px) clamp(12px,4vw,18px) 4px;}
+  }
+
+  @media (max-height:700px) and (max-width:600px){
+    .greet{padding-top:12px;}
+    .greet .intro{display:none;}
+    .stage{min-height:220px;}
+    .portrait{width:clamp(138px,42vw,170px);}
+    .rnd{width:48px;height:48px;}
+    .side{gap:10px;}
+    .moment-label{padding-top:2px;}
+    .qmoments{padding-top:5px;}
+    .inbar{margin-top:7px;padding-top:6px;padding-bottom:6px;}
+  }
 </style>
 </head>
 <body>
