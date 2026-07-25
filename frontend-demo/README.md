@@ -7,11 +7,12 @@
 - 本地：浏览器打开 `index.html`（等同 `snake-chat.html`，Snake 对话主页）
 - 线上预览：https://snakedeploy.vercel.app
 
-## 页面清单（15 页）
+## 页面清单（16 页）
 
 | 页面 | 说明 |
 |------|------|
-| `snake-chat.html` | Snake 对话主页（首页）· 四大入口 + 已连接设备状态 |
+| `snake-chat.html` | Snake 首页 · 快捷情境 + 输入框 + 已连接设备状态 |
+| `snake-conversation-list.html` | 对话列表 · 独立 session 划分、搜索与新建对话 |
 | `snake-onboarding.html` | 首次引导：用一个 Moment 讲清 Snake/预案/暗号/装备四对象 |
 | `snake-conversation.html` | 对话流：聊出预案 + 卷宗组装动画 |
 | `snake-plan-list.html` | 预案库（tab · 预案） |

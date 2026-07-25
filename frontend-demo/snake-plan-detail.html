@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SNAKE1 · 救急脱身 · 预案详情</title>
+<title>Snake · 预案详情</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@500;600;700;800;900&family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@500;700;900&display=swap" rel="stylesheet" />
@@ -37,7 +37,7 @@
   .statusbar .sys{display:flex;align-items:center;gap:7px;}
   .statusbar svg{display:block;}
 
-  .app{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 0 130px;}
+  .app{flex:1 1 auto;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 0 24px;}
   .app::-webkit-scrollbar{display:none;}
 
   /* top bar with back */
@@ -59,6 +59,17 @@
   .fact{font-family:var(--mono);font-weight:700;font-size:9px;letter-spacing:.3px;color:var(--ink);border:1.5px solid var(--ink);background:var(--cream);padding:3px 7px;display:flex;align-items:center;gap:4px;}
   .fact .sq{width:7px;height:7px;border:1px solid var(--ink);}
   .fact.ok{color:#256b3a;border-color:#256b3a;}
+  .skill-kicker{font-family:var(--mono);font-weight:700;font-size:9px;letter-spacing:1.2px;color:var(--pink2);margin-bottom:7px;}
+  .loop{margin:16px 18px 0;}
+  .loop h2{font-size:14px;font-weight:900;margin-bottom:10px;}
+  .loop-card{background:var(--card);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--pink);padding:4px 12px;}
+  .loop-row{display:flex;gap:11px;padding:13px 0;border-bottom:2px dashed #eee2c2;}
+  .loop-row:last-child{border-bottom:0;}
+  .loop-no{width:26px;height:26px;flex:0 0 auto;background:var(--ink);color:var(--sun);font-family:var(--disp);font-size:12px;display:flex;align-items:center;justify-content:center;}
+  .loop-copy{flex:1;min-width:0;}
+  .loop-copy b{display:block;font-size:13px;font-weight:900;}
+  .loop-copy small{display:block;margin-top:4px;font-size:11px;font-weight:600;line-height:1.45;color:#5a5347;}
+  .loop-tag{flex:0 0 auto;align-self:flex-start;font-family:var(--mono);font-weight:700;font-size:8px;border:1.5px solid var(--ink);background:var(--cream);padding:3px 5px;}
 
   /* section block */
   .sec{margin:16px 18px 0;}
@@ -150,141 +161,53 @@
         <a class="back" href="snake-plan-list.html" aria-label="返回">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
         </a>
-        <span class="htitle">预案详情</span>
+        <span class="htitle">预案</span>
         <span class="head-sp"></span>
         <span class="tg live">已启用</span>
       </div>
 
-      <!-- summary -->
+      <!-- Skill summary -->
       <div class="sum">
-        <div class="row1">
-          <img class="av" src="snake/snake_cut.png" alt="" />
-          <div>
-            <div class="nm">救急脱身</div>
-          </div>
-        </div>
-        <div class="mo">相亲 / 饭局怕冷场脱不了身 → 敲两下戒指，Snake 打个救急来电给你台阶下。</div>
-        <div class="facts">
+        <div class="skill-kicker">SKILL</div>
+        <div class="nm" id="skillName">体面离场</div>
+        <div class="mo" id="skillDesc">收到暗号后，用一通救急来电帮你自然离场。</div>
+        <div class="facts" id="skillFacts">
           <span class="fact"><span class="sq" style="background:var(--pink)"></span>暗号 Ring01 双击</span>
           <span class="fact"><span class="sq" style="background:var(--sun)"></span>装备 电话</span>
-          <span class="fact ok">最近 昨天 20:12 ✓</span>
-          <span class="fact">版本 v3 · 已测试</span>
         </div>
       </div>
 
-      <!-- 何时运行 · 暗号依赖 -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">1</span><b>何时运行</b><span class="hint">TRIGGER</span></div>
-        <div class="card dep">
-          <div class="ic">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="2.4" fill="#17140F" stroke="none"/><path d="M7.5 13a4.5 4.5 0 0 1 9 0M4.5 13a7.5 7.5 0 0 1 15 0"/></svg>
-          </div>
-          <div class="dt">
-            <b>双击 Ring 01</b>
-            <small>戴右手食指 · 双击窗口 400ms · 冷却 8s</small>
-          </div>
-          <span class="onair"><span class="d"></span>在线</span>
+      <section class="loop">
+        <h2>Loop</h2>
+        <div class="loop-card" id="loopCard">
+          <div class="loop-row"><span class="loop-no">1</span><span class="loop-copy"><b>收到暗号</b><small>双击 Ring 01</small></span><span class="loop-tag">WHEN</span></div>
+          <div class="loop-row"><span class="loop-no">2</span><span class="loop-copy"><b>确认场景</b><small>判断当前是否在饭局或相亲中</small></span><span class="loop-tag">CHECK</span></div>
+          <div class="loop-row"><span class="loop-no">3</span><span class="loop-copy"><b>等待 3 秒</b><small>保留取消时间</small></span><span class="loop-tag">WAIT</span></div>
+          <div class="loop-row"><span class="loop-no">4</span><span class="loop-copy"><b>拨打救急来电</b><small>通过电话装备，以「妈妈」来电</small></span><span class="loop-tag">DO</span></div>
         </div>
-      </div>
+      </section>
 
-      <!-- 会做什么 · 装备步骤 -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">2</span><b>会做什么</b><span class="hint">2 步 · 可取消</span></div>
-        <div class="card steps">
-          <div class="step">
-            <div class="no">1</div>
-            <div class="sc">
-              <div class="st-t"><b>等 3 秒缓冲</b><span class="chipk">延时 · 可取消</span></div>
-              <div class="st-d">给你 3 秒反悔时间，倒计时内随时可取消，不会真的拨出。</div>
-              <div class="kv"><span class="k">时长 <i>3s</i></span><span class="k">可立即执行</span></div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="no">2</div>
-            <div class="sc">
-              <div class="st-t"><b>打一个救急来电</b><span class="chipk" style="background:var(--coral)">真实动作</span></div>
-              <div class="st-d">用「妈妈」的来电身份拨给你，接通后播报一段自然的催促话术，帮你顺势起身离场。</div>
-              <div class="kv">
-                <span class="k">拨给 <i>我本人</i></span>
-                <span class="k">来电显示 <i>妈妈</i></span>
-                <span class="k">话术 <i>家里有急事</i></span>
-              </div>
-              <div class="kv" style="margin-top:6px">
-                <span class="k" style="background:#FDE3DC;border-color:var(--red);color:var(--red)">兜底 · 未接通则改发一条消息提醒</span>
-              </div>
-            </div>
-          </div>
+      <section class="sec">
+        <div class="sec-h"><span class="hash">T</span><b>测试预案</b><span class="hint">可选</span></div>
+        <div class="card" style="padding:12px">
+          <button type="button" style="width:100%;height:46px;background:var(--sun);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font:800 13px var(--ui);color:var(--ink)">手动测试</button>
         </div>
-      </div>
-
-      <!-- Snake 判断 -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">3</span><b>Snake 怎么判断</b><span class="hint">JUDGE</span></div>
-        <div class="card judge">
-          <div class="jt"><img src="snake/snake_cut.png" alt="" /><b>运行时，Snake会看这些</b></div>
-          <p>收到暗号后，Snake先确认现在确实在你设定的「饭局 / 相亲」时段，再决定用哪种来电身份和话术。</p>
-          <div class="li"><span class="b">·</span>读取：当前时间、你确认过的「怕冷场」偏好记忆。</div>
-          <div class="li"><span class="b">·</span>检查：电话装备已授权、Ring01 在线。</div>
-          <div class="li"><span class="b">·</span>若你在 3 秒内取消，则整条预案中止、不留任何真实动作。</div>
-        </div>
-      </div>
-
-      <!-- 最近一次 -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">4</span><b>最近一次运行</b><span class="hint">RECORD</span></div>
-        <div class="card recent" id="recent">
-          <div class="ic">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4 10-10"/></svg>
-          </div>
-          <div class="rt">
-            <b>成功 · 来电已接通</b>
-            <small>昨天 20:12 · 正式运行 · 耗时 6s</small>
-          </div>
-          <span class="go">→</span>
-        </div>
-      </div>
+      </section>
 
     </div><!-- /app -->
 
-    <!-- bottom actions -->
-    <div class="dock">
-      <a class="b ghost" id="editBtn" href="snake-chat.html" aria-label="对话编辑">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5 H20 V15 H10 L6 19 V15 H4 Z"/></svg>
-      </a>
-      <a class="b ghost" id="stopBtn">停用</a>
-      <div class="b pink" id="testBtn">立即测试 <span class="arw">→</span></div>
-    </div>
-
-    <!-- confirm sheet -->
-    <div class="mask" id="mask">
-      <div class="sheet">
-        <div class="sh-ic">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h13l-2 4 2 4H4z"/><path d="M4 4v16"/></svg>
-        </div>
-        <h3>测试会真的拨号</h3>
-        <p>这是一次真实全链路测试：3 秒延时结束后，Snake会用「妈妈」来电身份**真的拨打你的手机**。测试记录会单独标记，不混入正式运行。</p>
-        <div class="warnbox">⚠ 涉及真实拨号 · 请确认现在方便接听 · 倒计时内可随时取消</div>
-        <div class="acts">
-          <div class="b ghost" id="cancelTest" style="flex:1">再想想</div>
-          <a class="b pink" href="snake-run-active.html" style="flex:1.4">确认，开始测试 <span class="arw">→</span></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="toast" id="toast"></div>
-
   </div></div>
-
 <script>
 (function(){
-  var toastEl=document.getElementById('toast'),toastT;
-  function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('show');},1700);}
-  var mask=document.getElementById('mask');
-  document.getElementById('testBtn').addEventListener('click',function(){mask.classList.add('show');});
-  document.getElementById('cancelTest').addEventListener('click',function(){mask.classList.remove('show');});
-  mask.addEventListener('click',function(e){if(e.target===mask)mask.classList.remove('show');});
-  document.getElementById('stopBtn').addEventListener('click',function(){toast('已停用 · 停用后阻止新触发，配置和记录保留');});
-  document.getElementById('recent').addEventListener('click',function(){location.href='snake-run-record.html';});
+  var skill=new URLSearchParams(location.search).get('skill')||'exit';
+  if(skill==='icebreak'){
+    document.getElementById('skillName').textContent='社交破冰';
+    document.getElementById('skillDesc').textContent='让机器狗替你迈出社交第一步，并自然展示联系方式。';
+    document.getElementById('skillFacts').innerHTML='<span class="fact"><span class="sq" style="background:var(--pink)"></span>暗号 Ring 01 三击</span><span class="fact"><span class="sq" style="background:var(--sun)"></span>装备 机器狗</span>';
+    document.getElementById('loopCard').innerHTML='<div class="loop-row"><span class="loop-no">1</span><span class="loop-copy"><b>收到暗号</b><small>连续敲击 Ring 01 三次</small></span><span class="loop-tag">WHEN</span></div><div class="loop-row"><span class="loop-no">2</span><span class="loop-copy"><b>确认距离</b><small>目标在机器狗可接近范围</small></span><span class="loop-tag">CHECK</span></div><div class="loop-row"><span class="loop-no">3</span><span class="loop-copy"><b>友好靠近</b><small>摇尾并做示好动作</small></span><span class="loop-tag">DO</span></div><div class="loop-row"><span class="loop-no">4</span><span class="loop-copy"><b>展示信息</b><small>屏幕展示你的联系方式</small></span><span class="loop-tag">DO</span></div><div class="loop-row"><span class="loop-no">5</span><span class="loop-copy"><b>回到身边</b><small>完成后返回用户位置</small></span><span class="loop-tag">END</span></div>';
+  }else{
+    document.getElementById('loopCard').innerHTML='<div class="loop-row"><span class="loop-no">1</span><span class="loop-copy"><b>收到暗号</b><small>双击 Ring 01</small></span><span class="loop-tag">WHEN</span></div><div class="loop-row"><span class="loop-no">2</span><span class="loop-copy"><b>识别时机</b><small>确认处于社交场景</small></span><span class="loop-tag">CHECK</span></div><div class="loop-row"><span class="loop-no">3</span><span class="loop-copy"><b>拨打电话</b><small>来电身份显示为「妈妈」</small></span><span class="loop-tag">DO</span></div><div class="loop-row"><span class="loop-no">4</span><span class="loop-copy"><b>播报理由</b><small>家里有急事，让你马上回去</small></span><span class="loop-tag">SAY</span></div><div class="loop-row"><span class="loop-no">5</span><span class="loop-copy"><b>确认结果</b><small>未接听则 20 秒后重试一次</small></span><span class="loop-tag">LOOP</span></div>';
+  }
 })();
 </script>
 </body>

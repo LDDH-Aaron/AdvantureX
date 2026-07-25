@@ -44,6 +44,18 @@
   .logo{display:flex;align-items:center;gap:9px;}
   .logo .mark{width:26px;height:26px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-4deg);}
   .logo .wm{font-family:var(--disp);font-size:22px;letter-spacing:-1px;color:var(--ink);}
+  .add-item{margin:20px 18px 24px;height:60px;background:var(--pink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink);text-decoration:none;font-size:16px;font-weight:900;transition:transform .07s steps(2,jump-none),box-shadow .07s steps(2,jump-none);}
+  .add-item:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink);}
+  .add-item .plus{font-family:var(--disp);font-size:23px;line-height:1;}
+  .simple-section{padding:0 18px 18px;}
+  .simple-section h2{font-size:14px;font-weight:900;margin-bottom:10px;}
+  .simple-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border:2.5px solid var(--ink);box-shadow:4px 4px 0 var(--pink);color:var(--ink);text-decoration:none;transition:transform .07s steps(2,jump-none),box-shadow .07s steps(2,jump-none);}
+  .simple-card:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pink);}
+  .simple-card .simple-icon{width:40px;height:40px;flex:0 0 auto;background:var(--pink);border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);display:flex;align-items:center;justify-content:center;}
+  .simple-card .simple-copy{flex:1;min-width:0;}
+  .simple-card .simple-copy b{display:block;font-size:14px;font-weight:900;}
+  .simple-card .simple-copy small{display:block;margin-top:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--mut);}
+  .simple-card .arrow{font-family:var(--disp);font-size:22px;}
   .st-pill{display:flex;align-items:center;gap:7px;background:var(--pink);color:var(--ink);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-family:var(--ui);font-weight:800;font-size:12.5px;letter-spacing:.3px;padding:6px 11px;}
   .st-pill .dot{width:7px;height:7px;background:var(--ink);border-radius:50%;animation:blink 1.1s steps(2,jump-none) infinite;}
   @keyframes blink{0%,55%{opacity:1}56%,100%{opacity:.2}}
@@ -137,105 +149,34 @@
     <div class="app">
 
       <div class="head">
-        <div class="logo"><svg class="mark"><use href="#px-snake"/></svg><span class="wm">SNAKE</span></div>
-        <div class="st-pill"><span class="dot"></span>2 个在线</div>
+        <div class="logo"><svg class="mark"><use href="#px-snake"/></svg><span class="wm">暗号</span></div>
       </div>
 
-      <div class="hero">
-        <h1 class="hl">暗号<span class="p">。</span></h1>
-        <div class="hsub">现实里唤醒Snake的动作，比如「双击 Ring01」。</div>
-      </div>
+      <a class="add-item" href="snake-signal-add.html"><span class="plus">＋</span><span>新增暗号</span></a>
 
-      <!-- my signals -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">#</span><b>我的暗号</b><span class="n">2 个</span></div>
-        <div class="win">
-
-          <div class="row" data-real="1">
-            <div class="ic p">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="2.4" fill="#17140F" stroke="none"/><path d="M7.5 13a4.5 4.5 0 0 1 9 0M4.5 13a7.5 7.5 0 0 1 15 0"/></svg>
-            </div>
-            <div class="rc">
-              <div class="rh"><b>双击 Ring 01</b><span class="onair"><span class="d"></span>在线</span></div>
-              <div class="rm">戴右手食指 · 双击窗口 400ms · 冷却 8s。</div>
-              <div class="meta">
-                <span class="mc bind">绑定 救急脱身</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-real="0">
-            <div class="ic y">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13v-1a6 6 0 0 1 12 0v1"/><rect x="4" y="13" width="4" height="6" rx="1.5"/><rect x="16" y="13" width="4" height="6" rx="1.5"/></svg>
-            </div>
-            <div class="rc">
-              <div class="rh"><b>长按 耳机（右）</b><span class="onair"><span class="d"></span>在线</span></div>
-              <div class="rm">右耳长按 1.2s · 触发后短时收音窗口 5s。</div>
-              <div class="meta">
-                <span class="mc bind">绑定 深夜报平安</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- supported machines -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">+</span><b>支持的机器</b><span class="n">接入新暗号</span></div>
-        <div class="cat">
-
-          <div class="mch" data-m="Ring 01">
-            <div class="top">
-              <div class="mi p"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2"><circle cx="12" cy="14" r="6"/><path d="M9 7l3-4 3 4"/></svg></div>
-              <span class="stt ok">可用</span>
-            </div>
-            <h4>戒指 Ring</h4>
-            <small>单击 / 双击 / 长按 · 震动确认</small>
-          </div>
-
-          <div class="mch" data-m="耳机">
-            <div class="top">
-              <div class="mi y"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round"><path d="M6 13v-1a6 6 0 0 1 12 0v1"/><rect x="4" y="13" width="4" height="6" rx="1.5"/><rect x="16" y="13" width="4" height="6" rx="1.5"/></svg></div>
-              <span class="stt ok">可用</span>
-            </div>
-            <h4>耳机</h4>
-            <small>双击 / 长按 · 短时收音</small>
-          </div>
-
-          <div class="mch" data-m="实体按钮">
-            <div class="top">
-              <div class="mi c"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3" fill="#17140F"/></svg></div>
-              <span class="stt beta">Beta</span>
-            </div>
-            <h4>实体按钮</h4>
-            <small>单击 / 双击 / 长按 · LED 反馈</small>
-          </div>
-
-          <div class="mch" data-m="自定义 Webhook">
-            <div class="top">
-              <div class="mi co"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13 6l-2 12"/></svg></div>
-              <span class="stt soon">暂不支持</span>
-            </div>
-            <h4>自定义 Webhook</h4>
-            <small>自带协议 / 鉴权 · 可提交需求</small>
-          </div>
-
-        </div>
-      </div>
+      <section class="simple-section">
+        <h2>我的暗号</h2>
+        <a class="simple-card" id="ringCard" href="snake-signal-add.html?mode=edit" style="display:none">
+          <span class="simple-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="2.4" fill="#17140F" stroke="none"/><path d="M7.5 13a4.5 4.5 0 0 1 9 0M4.5 13a7.5 7.5 0 0 1 15 0"/></svg></span>
+          <span class="simple-copy"><b>双击 Ring 01</b><small>已连接 · 可用于预案</small></span>
+          <span class="arrow">›</span>
+        </a>
+      </section>
 
     </div><!-- /app -->
 
-    <div class="toast" id="toast"></div>
-
     <nav class="tabbar">
-      <a class="tab" href="snake-chat.html">
-        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5 H20 V16 H11 L6 20 V16 H4 Z"/></svg>
-        <span>Snake</span>
+      <a class="tab" href="snake-conversation-list.html">
+        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg>
+        <span>对话</span>
       </a>
       <a class="tab" href="snake-plan-list.html">
         <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
         <span>预案</span>
+      </a>
+      <a class="tab" href="snake-chat.html">
+        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/></svg>
+        <span>Snake</span>
       </a>
       <a class="tab active" href="snake-signal-config.html">
         <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="2.4" fill="currentColor" stroke="none"/><path d="M7.5 13a4.5 4.5 0 0 1 9 0M4.5 13a7.5 7.5 0 0 1 15 0"/></svg>
@@ -249,25 +190,6 @@
 
   </div></div>
 
-<script>
-(function(){
-  var toastEl=document.getElementById('toast'),toastT;
-  function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('show');},1800);}
-  document.querySelectorAll('#rows .row, .win .row').forEach(function(r){
-    r.addEventListener('click',function(){
-      if(r.dataset.real==='1')location.href='snake-signal-detail.html';
-      else toast('本 demo 只打通「救急脱身 · Ring01 双击」');
-    });
-  });
-  document.querySelectorAll('.mch').forEach(function(m){
-    m.addEventListener('click',function(){
-      var st=m.querySelector('.stt');
-      if(st.classList.contains('soon'))toast('「'+m.dataset.m+'」暂不支持 · 可提交型号需求');
-      else if(m.dataset.m==='Ring 01')location.href='snake-signal-add.html';
-      else toast('「'+m.dataset.m+'」接入向导 · 本 demo 只打通 Ring 01');
-    });
-  });
-})();
-</script>
 </body>
+<script>if(localStorage.getItem('snake_ring_added')==='1')document.getElementById('ringCard').style.display='flex';</script>
 </html>

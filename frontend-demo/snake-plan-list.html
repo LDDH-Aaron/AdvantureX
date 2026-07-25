@@ -45,6 +45,18 @@
   .logo{display:flex;align-items:center;gap:9px;}
   .logo .mark{width:26px;height:26px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-4deg);}
   .logo .wm{font-family:var(--disp);font-size:22px;letter-spacing:-1px;color:var(--ink);}
+  .add-plan{margin:20px 18px 24px;height:60px;background:var(--pink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink);text-decoration:none;font-size:16px;font-weight:900;transition:transform .07s steps(2,jump-none),box-shadow .07s steps(2,jump-none);}
+  .add-plan:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink);}
+  .add-plan .plus{font-family:var(--disp);font-size:23px;line-height:1;}
+  .plan-section{padding:0 18px 18px;}
+  .plan-section h2{font-size:14px;font-weight:900;margin-bottom:10px;}
+  .plan-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border:2.5px solid var(--ink);box-shadow:4px 4px 0 var(--pink);color:var(--ink);text-decoration:none;transition:transform .07s steps(2,jump-none),box-shadow .07s steps(2,jump-none);}
+  .plan-card:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink);}
+  .plan-card .case{width:38px;height:38px;flex:0 0 auto;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);}
+  .plan-card .body{flex:1;min-width:0;}
+  .plan-card .body b{display:block;font-size:14px;font-weight:900;}
+  .plan-card .body small{display:block;margin-top:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--mut);}
+  .plan-card .go{font-family:var(--disp);font-size:18px;}
   .head-r{display:flex;align-items:center;gap:8px;}
   .devs{display:flex;align-items:center;gap:6px;}
   .devchip{position:relative;width:34px;height:34px;flex:0 0 auto;background:var(--card);border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);display:flex;align-items:center;justify-content:center;color:var(--ink);}
@@ -200,129 +212,41 @@
       <div class="head">
         <div class="logo">
           <svg class="mark"><use href="#px-snake"/></svg>
-          <span class="wm">SNAKE</span>
-        </div>
-        <div class="head-r">
-          <a class="devs" href="snake-signal-config.html" aria-label="已连接设备">
-            <span class="devchip" title="Ring 01 · 在线">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2"><circle cx="12" cy="14" r="6"/><path d="M9 7l3-4 3 4"/></svg>
-              <span class="st on"></span>
-            </span>
-            <span class="devchip" title="耳机 · 在线">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 13v-1a6 6 0 0 1 12 0v1"/><rect x="4" y="13" width="4" height="6" rx="1.5"/><rect x="16" y="13" width="4" height="6" rx="1.5"/></svg>
-              <span class="st on"></span>
-            </span>
-          </a>
-          <a class="gear" href="snake-settings.html" aria-label="设置">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3.3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></svg>
-          </a>
+          <span class="wm">预案</span>
         </div>
       </div>
 
-      <!-- hero -->
-      <div class="hero">
-        <div class="hrow">
-          <h1 class="hl">我的预案<span class="p">。</span></h1>
-          <a class="rec" href="snake-run-record.html">运行记录 →</a>
-        </div>
-        <a class="b pink" href="snake-conversation.html">＋ 描述新时刻 <span class="arw">→</span></a>
-      </div>
+      <a class="add-plan" href="snake-skill-builder.html?flow=icebreak"><span class="plus">＋</span><span>新增预案</span></a>
 
-      <!-- running task strip (contextual · §14.8) -->
-      <div class="runstrip" id="runstrip">
-        <div class="pl"><svg width="10" height="12" viewBox="0 0 12 14"><path d="M1 1 L11 7 L1 13 Z" fill="#17140F"/></svg></div>
-        <div class="rt"><b>救急脱身 · 运行中</b><small>3S 后拨出</small></div>
-        <div class="ld"></div>
-      </div>
-
-      <!-- filter chips -->
-      <div class="filters" id="filters">
-        <div class="fc on" data-f="all">全部<span class="n">5</span></div>
-        <div class="fc" data-f="live">已启用<span class="n">2</span></div>
-        <div class="fc" data-f="test">待测试<span class="n">1</span></div>
-        <div class="fc" data-f="draft">草稿<span class="n">1</span></div>
-        <div class="fc" data-f="dead">不可用<span class="n">1</span></div>
-      </div>
-
-      <!-- window list -->
-      <div class="win">
-        <div class="rows" id="rows">
-
-          <div class="row" data-status="live" data-real="1">
-            <svg class="av r1"><use href="#px-case"/></svg>
-            <div class="rc">
-              <div class="rh"><b>救急脱身</b><span class="tg live">已启用</span></div>
-              <div class="rm">相亲/饭局怕冷场脱不了身 → Snake 打个救急来电给你台阶下。</div>
-              <div class="meta">
-                <span class="mc ok">刚刚 · 运行中</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-status="live">
-            <svg class="av r2"><use href="#px-cup"/></svg>
-            <div class="rc">
-              <div class="rh"><b>深夜到家报平安</b><span class="tg live">已启用</span></div>
-              <div class="rm">加班晚归想让家人安心 → Snake 替你发一条到家消息。</div>
-              <div class="meta">
-                <span class="mc ok">昨天 23:41 ✓</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-status="test">
-            <svg class="av r3"><use href="#px-case"/></svg>
-            <div class="rc">
-              <div class="rh"><b>面试前定心</b><span class="tg test">待测试</span></div>
-              <div class="rm">大厂终面前紧张 → Snake 提前打来陪你过一遍开场。</div>
-              <div class="meta">
-                <span class="mc warn">暗号冲突</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-status="draft">
-            <svg class="av r1"><use href="#px-ring"/></svg>
-            <div class="rc">
-              <div class="rh"><b>前任婚礼护航</b><span class="tg draft">草稿</span></div>
-              <div class="rm">去前任婚礼想体面撤退 → 还没想好怎么触发和用什么装备。</div>
-              <div class="meta">
-                <span class="mc warn">缺暗号 · 缺装备</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-status="dead">
-            <svg class="av r2"><use href="#px-dog"/></svg>
-            <div class="rc">
-              <div class="rh"><b>出差遛狗巡逻</b><span class="tg dead">不可用</span></div>
-              <div class="rm">出差时想让机械狗在家巡一圈 → 目前跑不起来。</div>
-              <div class="meta">
-                <span class="mc warn">机械狗暂未接入</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="empty" id="empty">
-          <p id="emptyTxt">这个筛选条件下暂时没有预案。</p>
-          <span class="clr" id="clr">清除筛选</span>
-        </div>
-      </div>
+      <section class="plan-section">
+        <h2>我的预案</h2>
+        <a class="plan-card" id="exitPlan" href="snake-plan-detail.html?skill=exit" style="display:none">
+          <svg class="case"><use href="#px-case"/></svg>
+          <span class="body"><b>体面离场</b><small>SKILL · 双击戒指 → 妈妈来电</small></span>
+          <span class="go">→</span>
+        </a>
+        <a class="plan-card" id="icebreakPlan" href="snake-plan-detail.html?skill=icebreak" style="display:none;margin-top:12px">
+          <svg class="case"><use href="#px-dog"/></svg>
+          <span class="body"><b>社交破冰</b><small>SKILL · 三击戒指 → 机器狗示好</small></span>
+          <span class="go">→</span>
+        </a>
+      </section>
 
     </div><!-- /app -->
 
-    <div class="toast" id="toast">本 demo 只打通了「救急脱身」</div>
-
-    <!-- bottom nav: Snake / 预案 / 暗号 / 装备 -->
+    <!-- bottom nav: 对话 / 预案 / Snake / 暗号 / 装备 -->
     <nav class="tabbar">
-      <a class="tab" href="snake-chat.html">
-        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5 H20 V16 H11 L6 20 V16 H4 Z"/></svg>
-        <span>Snake</span>
+      <a class="tab" href="snake-conversation-list.html">
+        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg>
+        <span>对话</span>
       </a>
       <a class="tab active" href="snake-plan-list.html">
         <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
         <span>预案</span>
+      </a>
+      <a class="tab" href="snake-chat.html">
+        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/></svg>
+        <span>Snake</span>
       </a>
       <a class="tab" href="snake-signal-config.html">
         <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="2.4" fill="currentColor" stroke="none"/><path d="M7.5 13a4.5 4.5 0 0 1 9 0M4.5 13a7.5 7.5 0 0 1 15 0"/></svg>
@@ -338,46 +262,9 @@
 
 <script>
 (function(){
-  var toastEl=document.getElementById('toast'),toastT;
-  function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('show');},1700);}
-
-  // filter chips
-  var chips=document.querySelectorAll('.fc'), rows=document.querySelectorAll('#rows .row');
-  var countEl=document.getElementById('count'), emptyEl=document.getElementById('empty'), emptyTxt=document.getElementById('emptyTxt');
-  var label={all:'全部',live:'已启用',test:'待测试',draft:'草稿',dead:'不可用'};
-  function applyFilter(f){
-    var shown=0;
-    rows.forEach(function(r){
-      var ok=(f==='all'||r.dataset.status===f);
-      r.style.display=ok?'':'none';
-      if(ok)shown++;
-    });
-    if(countEl)countEl.textContent=shown+' 条';
-    if(shown===0){emptyEl.style.display='block';emptyTxt.textContent='「'+label[f]+'」下暂时没有预案。换个筛选看看?';}
-    else{emptyEl.style.display='none';}
-  }
-  chips.forEach(function(c){
-    c.addEventListener('click',function(){
-      chips.forEach(function(x){x.classList.remove('on');});
-      c.classList.add('on');
-      applyFilter(c.dataset.f);
-    });
-  });
-  document.getElementById('clr').addEventListener('click',function(){
-    chips.forEach(function(x){x.classList.remove('on');});
-    document.querySelector('.fc[data-f="all"]').classList.add('on');
-    applyFilter('all');
-  });
-
-  // rows: only 救急脱身 has a real detail in this demo
-  rows.forEach(function(r){
-    r.addEventListener('click',function(){
-      if(r.dataset.real==='1'){location.href='snake-plan-detail.html';}
-      else{toast('这是示例预案 · 本 demo 只打通「救急脱身」');}
-    });
-  });
-
-  document.getElementById('runstrip').addEventListener('click',function(){location.href='snake-run-active.html';});
+  var exit=document.getElementById('exitPlan'),ice=document.getElementById('icebreakPlan');
+  if(localStorage.getItem('snake_plan_exit')==='1')exit.style.display='flex';
+  if(localStorage.getItem('snake_plan_icebreak')==='1')ice.style.display='flex';
 })();
 </script>
 </body>

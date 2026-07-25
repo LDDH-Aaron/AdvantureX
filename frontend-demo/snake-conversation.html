@@ -168,12 +168,11 @@
     </div>
 
     <div class="head">
-      <a class="back" href="snake-chat.html" aria-label="返回">
+      <a class="back" href="snake-conversation-list.html" aria-label="返回对话列表">
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
       </a>
-      <img class="hav" src="snake/snake_cut.png" alt="" />
       <div class="htxt">
-        <b>Snake</b>
+        <b id="sessionTitle">对话</b>
         <small id="hstat"><span class="d"></span>在线 · 正在帮你想办法</small>
       </div>
     </div>
@@ -197,6 +196,8 @@
   var thread=document.getElementById('thread'),qwrap=document.getElementById('qreplies'),
       input=document.getElementById('input'),hstat=document.getElementById('hstat');
   var toastEl=document.getElementById('toast'),toastT;
+  var sessionTitle=document.getElementById('sessionTitle');
+  try{var sid=new URLSearchParams(location.search).get('sid');sessionTitle.textContent=sid==='03'?'相亲饭局救急':'新对话';}catch(e){}
   function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('show');},2000);}
   function scroll(){thread.scrollTop=thread.scrollHeight;}
   var SNK='snake/snake_cut.png';
@@ -233,10 +234,21 @@
   }
 
   // ---- scripted conversation for 救急脱身 ----
-  var step=0;
+  var step=0,fresh=false;
 
   function start(){
-    // initial moment (passed from home via ?m= or default)
+    // An explicit new conversation starts empty and waits for the user.
+    try{
+      var params=new URLSearchParams(location.search),sid=params.get('sid'),initial=params.get('m');
+      if(sid==='new'&&!initial){
+        fresh=true;
+        snakeMsg('今天遇到什么事？直接告诉我就好。');
+        hstat.innerHTML='<span class="d"></span>在线';
+        input.focus();
+        return;
+      }
+    }catch(e){}
+    // Initial moment passed from Snake home or a recent conversation.
     var m='相亲饭局怕冷场，老是脱不了身';
     try{var q=new URLSearchParams(location.search).get('m'); if(q)m=q;}catch(e){}
     userMsg(m);
@@ -365,6 +377,7 @@
   // free-text input -> gentle nudge back to flow
   function send(){
     var v=input.value.trim();if(!v)return;input.value='';
+    if(fresh){location.href='snake-conversation.html?sid=new&m='+encodeURIComponent(v);return;}
     userMsg(v);
     typing(function(){
       if(step>=4){snakeMsg('收到～这版草稿在上面，满意就点「确认，去测试」，想改告诉我改哪块。');}

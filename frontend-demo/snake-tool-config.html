@@ -44,6 +44,18 @@
   .logo{display:flex;align-items:center;gap:9px;}
   .logo .mark{width:26px;height:26px;border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink);transform:rotate(-4deg);}
   .logo .wm{font-family:var(--disp);font-size:22px;letter-spacing:-1px;color:var(--ink);}
+  .add-item{margin:20px 18px 24px;height:60px;background:var(--pink);border:3px solid var(--ink);box-shadow:5px 5px 0 var(--ink);display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink);text-decoration:none;font-size:16px;font-weight:900;transition:transform .07s steps(2,jump-none),box-shadow .07s steps(2,jump-none);}
+  .add-item:active{transform:translate(4px,4px);box-shadow:1px 1px 0 var(--ink);}
+  .add-item .plus{font-family:var(--disp);font-size:23px;line-height:1;}
+  .simple-section{padding:0 18px 18px;}
+  .simple-section h2{font-size:14px;font-weight:900;margin-bottom:10px;}
+  .simple-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border:2.5px solid var(--ink);box-shadow:4px 4px 0 var(--pink);color:var(--ink);text-decoration:none;transition:transform .07s steps(2,jump-none),box-shadow .07s steps(2,jump-none);}
+  .simple-card:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--pink);}
+  .simple-card .simple-icon{width:40px;height:40px;flex:0 0 auto;background:var(--sun);border:2.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);display:flex;align-items:center;justify-content:center;}
+  .simple-card .simple-copy{flex:1;min-width:0;}
+  .simple-card .simple-copy b{display:block;font-size:14px;font-weight:900;}
+  .simple-card .simple-copy small{display:block;margin-top:5px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--mut);}
+  .simple-card .arrow{font-family:var(--disp);font-size:22px;}
   .st-pill{display:flex;align-items:center;gap:7px;background:var(--pink);color:var(--ink);border:2.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);font-family:var(--ui);font-weight:800;font-size:12.5px;letter-spacing:.3px;padding:6px 11px;}
   .st-pill .dot{width:7px;height:7px;background:var(--ink);border-radius:50%;animation:blink 1.1s steps(2,jump-none) infinite;}
   @keyframes blink{0%,55%{opacity:1}56%,100%{opacity:.2}}
@@ -140,122 +152,39 @@
     <div class="app">
 
       <div class="head">
-        <div class="logo"><svg class="mark"><use href="#px-snake"/></svg><span class="wm">SNAKE</span></div>
-        <div class="st-pill"><span class="dot"></span>2 件可调用</div>
+        <div class="logo"><svg class="mark"><use href="#px-snake"/></svg><span class="wm">装备</span></div>
       </div>
 
-      <div class="hero">
-        <h1 class="hl">装备<span class="p">。</span></h1>
-        <div class="hsub">Snake被你授权、能在现实里做的事，比如打电话。</div>
-      </div>
+      <a class="add-item" href="snake-tool-detail.html?mode=add"><span class="plus">＋</span><span>新增装备</span></a>
 
-      <!-- my tools -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">#</span><b>已装备</b><span class="n">3 件</span></div>
-        <div class="win">
-
-          <div class="row" data-real="1">
-            <div class="ic y">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
-            </div>
-            <div class="rc">
-              <div class="rh"><b>电话</b><span class="tg ok">可调用</span></div>
-              <div class="rm">帮你拨出一通救急来电，可设来电身份和话术。</div>
-              <div class="meta">
-                <span class="mc bind">依赖 救急脱身</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-real="1">
-            <div class="ic p">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-4 3V5z"/><path d="M8 9h8M8 12h5"/></svg>
-            </div>
-            <div class="rc">
-              <div class="rh"><b>消息</b><span class="tg ok">可调用</span></div>
-              <div class="rm">替你发一条模板消息，可配渠道、收件人和变量。</div>
-              <div class="meta">
-                <span class="mc bind">依赖 深夜报平安</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row" data-real="0">
-            <div class="ic g">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="12" height="7" rx="1.5"/><path d="M16 11l4-2v8l-4-2M6 16v3M14 16v3"/></svg>
-            </div>
-            <div class="rc">
-              <div class="rh"><b>机械狗</b><span class="tg dead">未接入</span></div>
-              <div class="rm">出差时在家巡逻一圈 → 目前没有可用设备。</div>
-              <div class="meta">
-                <span class="mc warn">暂未接入</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- capability catalog -->
-      <div class="sec">
-        <div class="sec-h"><span class="hash">+</span><b>能力目录</b><span class="n">按用途分类</span></div>
-
-        <div class="capgroup">
-          <span class="cap-t">沟通</span>
-          <div class="caps">
-            <div class="cap" data-c="电话" data-st="ok">
-              <div class="ct"><div class="ci y"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></div><span class="stt ok">可用</span></div>
-              <h4>打电话</h4><small>拨出 / 救急来电 · 需拨号权限</small>
-            </div>
-            <div class="cap" data-c="消息" data-st="ok">
-              <div class="ct"><div class="ci p"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-4 3V5z"/></svg></div><span class="stt ok">可用</span></div>
-              <h4>发消息</h4><small>短信 / IM · 需发送权限</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="capgroup">
-          <span class="cap-t">信息</span>
-          <div class="caps">
-            <div class="cap" data-c="查日程" data-st="beta">
-              <div class="ct"><div class="ci c"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="1.5"/><path d="M4 9h16M8 3v4M16 3v4"/></svg></div><span class="stt beta">Beta</span></div>
-              <h4>查日程</h4><small>读今日安排 · 判断时段</small>
-            </div>
-            <div class="cap" data-c="播报" data-st="beta">
-              <div class="ct"><div class="ci co"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9a4 4 0 0 1 0 6"/></svg></div><span class="stt beta">Beta</span></div>
-              <h4>语音播报</h4><small>耳机里给你提示 · 需扬声</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="capgroup">
-          <span class="cap-t">物理行动</span>
-          <div class="caps">
-            <div class="cap" data-c="机械狗" data-st="soon">
-              <div class="ct"><div class="ci g"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="12" height="7" rx="1.5"/><path d="M16 11l4-2v8l-4-2M6 16v3M14 16v3"/></svg></div><span class="stt soon">暂不支持</span></div>
-              <h4>机械狗</h4><small>巡逻 / 固定路线 · 需紧急停止</small>
-            </div>
-            <div class="cap" data-c="自定义 Tool" data-st="soon">
-              <div class="ct"><div class="ci c"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 6a3.5 3.5 0 0 0-4.7 4.5L4 15.8 6.2 18l5.3-5.3A3.5 3.5 0 0 0 16 8l-2 2-2-2 2-2z"/></svg></div><span class="stt soon">暂不支持</span></div>
-              <h4>自定义 Tool</h4><small>自带 API · 需鉴权 / 幂等</small>
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <section class="simple-section">
+        <h2>我的装备</h2>
+        <a class="simple-card" href="snake-tool-detail.html?mode=edit">
+          <span class="simple-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+          <span class="simple-copy"><b>电话</b><small>已授权 · 救急来电</small></span>
+          <span class="arrow">›</span>
+        </a>
+        <a class="simple-card" id="dogCard" href="snake-tool-detail.html?mode=dog" style="display:none;margin-top:12px">
+          <span class="simple-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#17140F" stroke-width="2.2"><path d="M5 9 3 6M19 9l2-3M5 9h14v9H5zM8 18v3M16 18v3"/><circle cx="9" cy="13" r="1" fill="#17140F"/><circle cx="15" cy="13" r="1" fill="#17140F"/></svg></span>
+          <span class="simple-copy"><b>机器狗</b><small>已连接 · 示好并展示联系方式</small></span>
+          <span class="arrow">›</span>
+        </a>
+      </section>
 
     </div><!-- /app -->
 
-    <div class="toast" id="toast"></div>
-
     <nav class="tabbar">
-      <a class="tab" href="snake-chat.html">
-        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5 H20 V16 H11 L6 20 V16 H4 Z"/></svg>
-        <span>Snake</span>
+      <a class="tab" href="snake-conversation-list.html">
+        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-5 4v-4H4z"/><path d="M8 9h8M8 12h5"/></svg>
+        <span>对话</span>
       </a>
       <a class="tab" href="snake-plan-list.html">
         <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="1.5"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
         <span>预案</span>
+      </a>
+      <a class="tab" href="snake-chat.html">
+        <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5V20h-5v-5H9v5H4z"/></svg>
+        <span>Snake</span>
       </a>
       <a class="tab" href="snake-signal-config.html">
         <svg class="g" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="2.4" fill="currentColor" stroke="none"/><path d="M7.5 13a4.5 4.5 0 0 1 9 0M4.5 13a7.5 7.5 0 0 1 15 0"/></svg>
@@ -269,23 +198,6 @@
 
   </div></div>
 
-<script>
-(function(){
-  var toastEl=document.getElementById('toast'),toastT;
-  function toast(m){toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(function(){toastEl.classList.remove('show');},1800);}
-  document.querySelectorAll('.win .row').forEach(function(r){
-    r.addEventListener('click',function(){
-      if(r.dataset.real==='1')location.href='snake-tool-detail.html';
-      else toast('机械狗暂未接入 · 可去能力目录看替代装备');
-    });
-  });
-  document.querySelectorAll('.cap').forEach(function(c){
-    c.addEventListener('click',function(){
-      if(c.dataset.st==='soon')toast('「'+c.dataset.c+'」暂不支持 · 可提交需求');
-      else toast('接入「'+c.dataset.c+'」：连接→授权→参数→独立测试（demo 占位）');
-    });
-  });
-})();
-</script>
 </body>
+<script>if(localStorage.getItem('snake_dog_added')==='1')document.getElementById('dogCard').style.display='flex';</script>
 </html>
